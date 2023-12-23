@@ -1,41 +1,56 @@
 :root {
-    --primary-color: #c0a912;
+    --primary-color: #ffaa00;
   }
   
   .card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: column;
     justify-content: space-between;
-    width: 250px;
+    max-width: 150px;
     height: 100%;
     border: 2px solid var(--primary-color);
-    padding: 0.5rem 0.4rem;
-    margin: 40px 20px;
+    padding: 0.3rem 0.6rem;
+    margin: 35px 15px;
     position: relative;
     border-radius: 5px;
   }
   
   .card__title {
     font-weight: 600;
-    text-align: center;
+    text-align: left;
     color: cornsilk;
     text-shadow: 3px 2px 4px #c0a9126c;
-    background-color: #111111
+    background-color: #111111;
+    display: flex;
+    position: relative;
   }
   
-  .card__title .card__price {
+  .card__title ,.card__price {
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card__price{
+    margin-top: 0.2rem;
+
   }
   
   .image__container {
-    width: 240px;
-    height: 220px;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 2px 1px 2px 1px #ffaa006b;
   }
   
   .image__container img {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    width: 120px;
     object-fit: cover;
     background-attachment: fixed;
     background-position: center;
@@ -45,6 +60,7 @@
   .btn-container {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
   }
   

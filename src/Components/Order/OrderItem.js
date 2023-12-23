@@ -2,6 +2,7 @@ import React from "react";
 import { handleDecrement, handleDelete, handleIncrement } from "../../db/productSignals";
 import './Order.css';
 
+
 function OrderItem({ id, BookTitle, quantity, price, ImageL }) {
   return (
     <div className="order-item-container card-wrap">
@@ -16,7 +17,7 @@ function OrderItem({ id, BookTitle, quantity, price, ImageL }) {
             <strong className="btns">{quantity}</strong>
             <button className="btns btn-add" onClick={() => handleIncrement(id)}>➕</button>
           </div>
-          <span className="item-price">Price: XOF{price.toFixed(3)}</span>
+          <span className="item-price">Price: {price} XOF</span>
           <button className="btnx" onClick={() => handleDelete(id)}>Remove</button>
         </div>
       </li>

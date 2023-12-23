@@ -32,7 +32,7 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "signals": "^1.0.0",
-    "telegraf": "^4.12.2",
+    "telegraf": "^4.15.3",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },

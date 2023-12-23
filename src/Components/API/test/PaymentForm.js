@@ -6,7 +6,7 @@ import "./paymentForm.css";
 
 
 const PaymentForm = () => {
-    const [amount, setAmount] = useState(calculateTotalPrice.value.toFixed(3));
+    const [amount, setAmount] = useState(calculateTotalPrice.value);
     const [currency, setCurrency] = useState("XOF");
     const [channels, setChannels] = useState("ALL");
     const [description, setDescription] = useState("Test de paiement");

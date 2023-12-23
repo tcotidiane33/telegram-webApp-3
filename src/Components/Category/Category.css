@@ -1,49 +1,51 @@
-/* Category.css */
-
 .category-container {
     max-width: 1200px;
     margin: 20px auto;
-  }
-  
-  .books-list {
+}
+
+.books-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-  }
-  
-  .book-item {
+}
+
+.book-item {
     padding: 20px;
     border: 1px solid #ddd;
     display: flex;
-    flex-direction: column;  cursor: pointer;
+    flex-direction: column;
+    cursor: pointer;
     transition: transform 0.3s ease-in-out;
-  }
-  .book-image {
+}
+
+.book-image {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
-  } 
-  .book-titleS{
+}
+
+.book-titleS {
     position: inherit;
 
-  }
-  .book-imageS {
+}
+
+.book-imageS {
     max-width: 62px;
     height: 62px;
     margin-bottom: 10px;
     position: absolute;
-  }
-  
-  .book-details {
+}
+
+.book-details {
     flex: 1;
-  }
-  
-  .book-item:hover {
+}
+
+.book-item:hover {
     transform: scale(1.05);
-  }
-  
-  /* Modal styles */
-  .modal-overlay {
+}
+
+/* Modal styles */
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -53,9 +55,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background: white;
     padding: 20px;
     border-radius: 5px;
@@ -63,9 +65,8 @@
     width: 100%;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  
-  
-  /* Add any additional styles based on your design preferences */
-  
+}
+
+
+
+/* Add any additional styles based on your design preferences */

@@ -37,7 +37,6 @@ function Order() {
               quantity={quantity}
               price={price}
               Image={ImageL}
-
             />
           ))}
         </ul>
