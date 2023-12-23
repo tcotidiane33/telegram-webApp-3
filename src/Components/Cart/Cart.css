@@ -1,0 +1,11 @@
+.cart__container {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-top: 12px;
+    margin: 5px 15px;
+  }
+.bold{
+  font-weight: 900;
+  padding: 10px;
+}

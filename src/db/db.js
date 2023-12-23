@@ -1,0 +1,150 @@
+export function getData() {
+  return [
+    { ISBN: "0195153448", BookTitle: "Classical Mythology", BookAuthor: "Mark P. O. Morford", YearOfPublication: 2002, price: 12.000,Publisher: "Scribner", ImageS: "http://images.amazon.com/images/P/0195153448.01.THUMBZZZ.jpg", ImageM: "http://images.amazon.com/images/P/0195153448.01.MZZZZZZZ.jpg", ImageL: "http://images.amazon.com/images/P/0195153448.01.LZZZZZZZ.jpg", id: 1 },
+    { ISBN: "0002005018", BookTitle: "Clara Callan", BookAuthor: "Richard Bruce Wright", YearOfPublication: 2001, price: 17.000, Publisher: "W. W. Norton & Company", ImageS: "http://images.amazon.com/images/P/0002005018.01.THUMBZZZ.jpg", ImageM: "http://images.amazon.com/images/P/0002005018.01.MZZZZZZZ.jpg", ImageL: "http://images.amazon.com/images/P/0002005018.01.LZZZZZZZ.jpg", id: 2 },
+    {
+      ISBN: "0684823802",
+      BookTitle: "OUT OF THE SILENT PLANET",
+      BookAuthor: "C.S. Lewis",
+      YearOfPublication: 1996,
+      price: 45.000,
+      Publisher: "Scribner",
+      ImageS: "http://images.amazon.com/images/P/0684823802.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0684823802.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0684823802.01.LZZZZZZZ.jpg",
+      id: 3
+    },
+    {
+      ISBN: "0374157065",
+      BookTitle: "Flu: The Story of the Great Influenza Pandemic of 1918 and the Search for the Virus That Caused It",
+      BookAuthor: "Gina Bari Kolata",
+      YearOfPublication: 1999,
+      price: 32.000,
+      Publisher: "Farrar Straus Giroux",
+      ImageS: "http://images.amazon.com/images/P/0374157065.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0374157065.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0374157065.01.LZZZZZZZ.jpg",
+      id: 4
+    },
+    {
+      ISBN: "0393045218",
+      BookTitle: "The Mummies of Urumchi",
+      BookAuthor: "E. J. W. Barber",
+      YearOfPublication: 1999,
+      price: 17.000,
+      Publisher: "W. W. Norton & Company",
+      ImageS: "http://images.amazon.com/images/P/0393045218.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0393045218.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0393045218.01.LZZZZZZZ.jpg",
+      id: 5
+    },
+    {
+      ISBN: "0375759778",
+      BookTitle: "Prague : A Novel",
+      BookAuthor: "ARTHUR PHILLIPS",
+      YearOfPublication: 2003,
+      price: 42.000,
+      Publisher: "Random House Trade Paperbacks",
+      ImageS: "http://images.amazon.com/images/P/0375759778.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0375759778.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0375759778.01.LZZZZZZZ.jpg",
+      id: 6
+    },
+    {
+      ISBN: "0425176428",
+      BookTitle: "What If?: The World's Foremost Military Historians Imagine What Might Have Been",
+      BookAuthor: "Robert Cowley",
+      YearOfPublication: 2000,
+      price: 13.000,
+      Publisher: "Berkley Publishing Group",
+      ImageS: "http://images.amazon.com/images/P/0425176428.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0425176428.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0425176428.01.LZZZZZZZ.jpg",
+      id: 7
+    },
+    {
+      ISBN: "0671870432",
+      BookTitle: "Into the Wild",
+      BookAuthor: "Jon Krakauer",
+      YearOfPublication: 1997,
+      price: 12.000,
+      Publisher: "Villard",
+      ImageS: "http://images.amazon.com/images/P/0671870432.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0671870432.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0671870432.01.LZZZZZZZ.jpg",
+      id: 8
+    },
+    {
+      ISBN: "0425163091",
+      BookTitle: "Chocolate Jesus",
+      BookAuthor: "Stephan Jaramillo",
+      YearOfPublication: 1998,
+      price: 15.000,
+      Publisher: "Berkley Publishing Group",
+      ImageS: "http://images.amazon.com/images/P/0425163091.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0425163091.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0425163091.01.LZZZZZZZ.jpg",
+      id: 9
+    },
+    {
+      ISBN: "0743225406",
+      BookTitle: "Wild Swans: Three Daughters of China",
+      BookAuthor: "Chang Jung",
+      YearOfPublication: 1991,
+      price: 14.000,
+      Publisher: "Simon & Schuster",
+      ImageS: "http://images.amazon.com/images/P/0743225406.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0743225406.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0743225406.01.LZZZZZZZ.jpg",
+      id: 10
+    },
+    {
+      ISBN: "0805053883",
+      BookTitle: "Galileo's Daughter: A Historical Memoir of Science, Faith, and Love",
+      BookAuthor: "Dava Sobel",
+      YearOfPublication: 1999,
+      price: 14.000,
+      Publisher: "Walker & Company",
+      ImageS: "http://images.amazon.com/images/P/0805053883.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0805053883.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0805053883.01.LZZZZZZZ.jpg",
+      id: 11
+    },
+    {
+      ISBN: "0971880107",
+      BookTitle: "Zachary Taylor: Soldier, Planter, Statesman of the Old Southwest",
+      BookAuthor: "K. Jack Bauer",
+      YearOfPublication: 1995,
+      price: 15.000,
+      Publisher: "American Political Biography Press",
+      ImageS: "http://images.amazon.com/images/P/0971880107.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0971880107.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0971880107.01.LZZZZZZZ.jpg",
+      id: 12
+    },
+    {
+      ISBN: "0805046340",
+      BookTitle: "How the Irish Saved Civilization",
+      BookAuthor: "Thomas Cahill",
+      YearOfPublication: 1996,
+      price: 10.000,
+      Publisher: "Doubleday",
+      ImageS: "http://images.amazon.com/images/P/0805046340.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0805046340.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0805046340.01.LZZZZZZZ.jpg",
+      id: 13
+    },
+    {
+      ISBN: "0060930570",
+      BookTitle: "The Year of Living Danishly: Uncovering the Secrets of the World's Happiest Country",
+      BookAuthor: "Helen Russell",
+      YearOfPublication: 2015,
+      price: 13.000,
+      Publisher: "Icon Books",
+      ImageS: "http://images.amazon.com/images/P/0060930570.01.THUMBZZZ.jpg",
+      ImageM: "http://images.amazon.com/images/P/0060930570.01.MZZZZZZZ.jpg",
+      ImageL: "http://images.amazon.com/images/P/0060930570.01.LZZZZZZZ.jpg",
+      id: 14
+    }
+  ];
+}

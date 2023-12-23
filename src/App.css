@@ -1,0 +1,30 @@
+body{
+  background-color: rgba(249, 100, 0, 0.651);
+  color: #fff;
+}
+
+.btn {
+  padding: 0.6rem 0.8rem;
+  font-size: 1.2rem;
+  text-align: center;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  width: 120px;
+  margin-left: 10px;
+  box-shadow: 1px -3px 52px -5px rgba(0, 0, 0, 0.77);
+  cursor: pointer;
+  
+  justify-content: center;
+  text-align: center;
+}
+
+.cards__container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.heading{
+  text-align: center;
+}

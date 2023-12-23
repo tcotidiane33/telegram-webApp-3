@@ -1,0 +1,21 @@
+.navbar {
+    background-color: #3498db;
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.navbarHome{
+    color: #717477;
+}
