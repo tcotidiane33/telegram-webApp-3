@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #e0c521;
+  --primary-color: #ffbf00;
 }
 
 button{
@@ -41,7 +41,7 @@ button{
   border: 0;
   outline: none;
   border-radius: 10px;
-  width: 10%;
+  width: 100%;
   /* margin-left: 2px; */
   box-shadow: 1px -3px 5px -5px rgba(0, 0, 0, 0.77);
   cursor: pointer;

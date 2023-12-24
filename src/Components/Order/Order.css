@@ -60,7 +60,11 @@
 
 .order-item {
   margin: 10px;
-  width: 260px;
+  padding: 1rem;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 350px;
   background-color: #6967676e;
   overflow: hidden;
@@ -88,7 +92,7 @@
   position: absolute;
   bottom: 0;
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: #fff;
   transform: translateY(40%);
   transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -135,4 +139,12 @@
   transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
   box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px,
     rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
+}
+
+.item-buttons{
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: auto;
 }
