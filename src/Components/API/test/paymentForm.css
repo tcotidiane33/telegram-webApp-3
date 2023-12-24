@@ -3,6 +3,8 @@ form {
     flex-direction: column;
     max-width: 400px;
     margin: auto;
+    padding: 10px;
+    overflow: auto;
   }
   
   div {

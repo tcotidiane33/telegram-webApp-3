@@ -59,23 +59,7 @@ bot.on('message', async (msg) => {
             text: 'Category', web_app: { url: webAppUrlCategory },
             callback_data: 'option1',
             thumb_url: 'https://ediltex.co.uk/wp-content/uploads/2014/11/cash4clothes-logo-big.png',
-          },
-          // {
-          //   text: 'Sc-fiction', web_app: { url: webAppUrl },
-          //   callback_data: 'option2',
-          //   thumb_url: 'https://axonaut.com/blog/wp-content/uploads/2023/01/pipe-commercial-sans-card-9-1.png',
-          // },
-          // {
-          //   text: 'Histoire', web_app: { url: webAppUrl },
-          //   callback_data: 'option3',
-          //   thumb_url: 'https://img.freepik.com/free-vector/set-clothes-isolated_1308-133273.jpg',
-          // },
-          // {
-          //   text: 'Emotions', web_app: { url: webAppUrl },
-          //   callback_data: 'option4',
-          //   thumb_url: 'https://img.freepik.com/free-vector/set-clothes-isolated_1308-133273.jpg',
-          // },
-        ]
+          },]
         ]
       }
     });
