@@ -22,19 +22,20 @@ const App = () => {
             <Order />
           )}
         />
-        <Route path="/category"  component={Category} />
-       
+        <Route path="/category" exact component={Category} />
+
         <Route
           path="/paymentForm"
           render={(props) => (
             <PaymentForm />
           )} />
+          
         <Route
           path="/payment"
           render={(props) => (
             <Payment />
           )} />
-        <Route path="/notify"component={Notify}/>
+        <Route path="/notify" exact component={Notify} />
 
 
       </Switch>
