@@ -7,6 +7,8 @@ import Home from "./Components/Home";
 import Order from "./Components/Order/Order";
 import Category from "./Components/Category/Category";
 import PaymentForm from "./Components/API/test/PaymentForm";
+import Payment from "./Components/API/Payment";
+import Notify from "./Components/API/Notify";
 
 const App = () => {
 
@@ -21,13 +23,22 @@ const App = () => {
           )}
         />
         <Route path="/category" component={Category} />
-        
         <Route
           path="/paymentForm"
           render={(props) => (
             <PaymentForm />
           )} />
-          
+        <Route
+          path="/payment"
+          render={(props) => (
+            <Payment />
+          )} />
+        <Route
+          path="/notify"
+          render={(props) => (
+            <Notify />
+          )} />
+
 
       </Switch>
     </BrowserRouter>

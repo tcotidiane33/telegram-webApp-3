@@ -13,9 +13,9 @@ export const onAdd = (productId) => {
     handleIncrement(productId)
   } else {
     const products = getData();
-    const product = products.find((x)=> x.id === productId);
-    cartItems.value = [...cartItems.value, {...product, quantity : 1}]
-  }
+    const product = products.find((x) => x.id === productId);
+    cartItems.value = [...cartItems.value, { ...product, quantity: 1 }]
+  }     
 };
 
 export const handleIncrement = (productId) => {
@@ -31,17 +31,17 @@ export const handleIncrement = (productId) => {
 
 export const handleDecrement = (productId) => {
   const exist = cartItems.value.find((x) => x.id === productId);
-  if(exist){
+  if (exist) {
     if (exist.quantity === 0) {
       cartItems.value = cartItems.value.filter((x) => x.id !== productId)
       return
-    }  
-    
-    
+    }
+
+
     cartItems.value = cartItems.value.map((x) =>
-    x.id === productId ? { ...exist, quantity: exist.quantity - 1 } : x
+      x.id === productId ? { ...exist, quantity: exist.quantity - 1 } : x
     )
-    
+
 
   }
   console.log(cartItems.value);
@@ -50,7 +50,6 @@ export const handleDecrement = (productId) => {
 export const handleDelete = (productId) => {
   cartItems.value = cartItems.value.filter((x) => x.id !== productId)
 }
-
 
 export const calculateTotalPrice = computed(() => {
   return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {

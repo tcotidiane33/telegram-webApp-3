@@ -8,8 +8,8 @@ test('Make payment', () => {
   const config = {
     apikey: '447088687629111c58c3573.70152188',
     site_id: 911501,
-    notify_url: 'https://google.com/notify',
-    return_url: 'https://youtube.com/return',
+    notify_url: 'https://libraryci.netlify.app/notify',
+    return_url: 'https://libraryci.netlify.app/notify',
     lang: 'fr',
   };
 

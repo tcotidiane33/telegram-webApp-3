@@ -139,7 +139,7 @@ export function getData() {
       BookTitle: "The Year of Living Danishly: Uncovering the Secrets of the World's Happiest Country",
       BookAuthor: "Helen Russell",
       YearOfPublication: 2015,
-      price: 13000,
+      price: 100,
       Publisher: "Icon Books",
       ImageS: "http://images.amazon.com/images/P/0060930570.01.THUMBZZZ.jpg",
       ImageM: "http://images.amazon.com/images/P/0060930570.01.MZZZZZZZ.jpg",

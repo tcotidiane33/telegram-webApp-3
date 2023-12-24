@@ -30,6 +30,7 @@ export class Cinetpay {
                     if (response.status === 200 && response.data.code === '201' && response.data.data) {
                         localStorage.setItem('payment', JSON.stringify(response.data));
                         window.location.href = response.data.data.payment_url;
+                        this.sendNotification('Paiement réussi : Opération réussie !');
                     } else {
                         return response.data;
                     }
@@ -59,6 +60,7 @@ export class Cinetpay {
                 .then((response) => {
                     if (response.status === 200 && response.data.code === '00' && response.data.data) {
                         localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
+                        this.sendNotification('Vérification du paiement réussie : Opération réussie !');
                         return response.data;
                     } else {
                         return response.data;
@@ -71,6 +73,11 @@ export class Cinetpay {
             throw err;
         }
     };
+    sendNotify(message){
+        alert(message);
+        console.log('Notification :', message);
+        
+    }
 }
 
 //module.exports = Cinetpay;

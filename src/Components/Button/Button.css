@@ -60,7 +60,9 @@ button{
   width: 20%;
   color: #fff;
   font-size: 14px;
-  align-items: flex-end;
+  /* align-items: flex-end; */
+  display: flex;
+  justify-content: center;
   text-align: center;
   right: 10px;
   display: inline-flex;

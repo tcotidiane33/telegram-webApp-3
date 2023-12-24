@@ -1,26 +1,22 @@
 import React, { useState } from "react";
-import { Cinetpay } from "../cinetpay"; // Assurez-vous que le chemin est correct
-import Nav from "../../Nav/Nav";
-import { calculateTotalPrice } from "../../../db/productSignals";
-import "./paymentForm.css";
+import { Cinetpay } from "./cinetpay"; // Assurez-vous que le chemin est correct
+import Nav from "../Nav/Nav";
+import { calculateTotalPrice } from "../../db/productSignals";
+
+import "./test/paymentForm.css";
 
 
-const PaymentForm = () => {
+const Payment = () => {
     const [amount, setAmount] = useState(calculateTotalPrice.value);
     const [currency, setCurrency] = useState("XOF");
     const [channels, setChannels] = useState("ALL");
-    const [description, setDescription] = useState("Test de paiement");
-
-    // Nouveaux états pour les informations du client
+    const [description, setDescription] = useState("Livre - Test de paiement");
     const [customer_name, setCustomerName] = useState("");
-    // const [customer_surname, setCustomerSurname] = useState("");
+    const [customer_carts, setCustomerCarts] = useState("");
     const [customer_email, setCustomerEmail] = useState("");
     const [customer_phone_number, setCustomerPhoneNumber] = useState("");
     const [customer_address, setCustomerAddress] = useState("");
     const [customer_city, setCustomerCity] = useState("");
-    //const [customer_country, setCustomerCountry] = useState("");
-    // const [customer_state, setCustomerState] = useState("");
-    // const [customer_zip_code, setCustomerZipCode] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,14 +37,12 @@ const PaymentForm = () => {
             channels,
             description,
             customer_name,
-            // customer_surname,
+            customer_carts,
             customer_email,
             customer_phone_number,
             customer_address,
             customer_city,
-            //customer_country,
-            // customer_state,
-            // customer_zip_code,
+
         };
 
         try {
@@ -56,25 +50,15 @@ const PaymentForm = () => {
             const cp = new Cinetpay({
                 apikey: '447088687629111c58c3573.70152188',
                 site_id: 911501,
-                notify_url: 'https://ecopayci.netlify.app/notify/',
-                return_url: 'https://ecopayci.netlify.app/notify/',
+                notify_url: 'https://library.netlify.app/notify',
+                return_url: 'https://library.netlify.app/',
                 lang: 'fr',
             });
 
             // Utilisez la méthode makePayment de Cinetpay pour effectuer le paiement
             const response = await cp.makePayment(paymentConfig).then((response) => console.log(response))
                 .catch((err) => console.log(err));
-            if (response.status == "REFUSED") {
-                if (alert("Votre paiement a échoué")) {
-                    window.location.reload();
-                }
-            } else if (response.status == "ACCEPTED") {
-                if (alert("Votre paiement a été effectué avec succès")) {
-                    window.location.reload();
-                }
-            }
-            // Gérez la réponse du paiement, redirigez ou effectuez d'autres actions si nécessaire
-            //console.log("Paiement réussi :", response);
+            
         } catch (error) {
             // Gérez les erreurs de paiement ici
             console.error("Erreur de paiement :", error.message);
@@ -127,14 +111,14 @@ const PaymentForm = () => {
                         onChange={(e) => setCustomerName(e.target.value)}
                     />
                 </div>
-                {/* <div>
-                    <label>Prénom du client:</label>
+                <div>
+                    <label>Commandes du client:</label>
                     <input
                         type="text"
-                        value={customer_surname}
-                        onChange={(e) => setCustomerSurname(e.target.value)}
+                        value={customer_carts}
+                        onChange={(e) => setCustomerCarts(e.target.value)}
                     />
-                </div> */}
+                </div>
                 <div>
                     <label>Email du client:</label>
                     <input
@@ -167,31 +151,6 @@ const PaymentForm = () => {
                         onChange={(e) => setCustomerCity(e.target.value)}
                     />
                 </div>
-                {/*<div>
-                    <label>Pays du client:</label>
-                    <input
-                        type="text"
-                        value={customer_country}
-                        onChange={(e) => setCustomerCountry(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>État du client:</label>
-                    <input
-                        type="text"
-                        value={customer_state}
-                        onChange={(e) => setCustomerState(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Code postal du client:</label>
-                    <input
-                        type="text"
-                        value={customer_zip_code}
-                        onChange={(e) => setCustomerZipCode(e.target.value)}
-                    />
-                </div> */}
-
                 <button type="submit">Effectuer le Paiement</button>
             </form>
 
@@ -199,4 +158,4 @@ const PaymentForm = () => {
     );
 };
 
-export default PaymentForm;
+export default Payment;
