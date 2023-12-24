@@ -5,9 +5,9 @@ const { getData } = require("../db/db");
 export const cartItems = signal([]);
 
 export const onAdd = (productId) => {
-  console.log("Called")
+  // console.log("Called")
   const exist = cartItems.value.find((x) => x.id === productId);
-  console.log(exist);
+  // console.log(exist);
 
   if (exist) {
     handleIncrement(productId)
@@ -20,9 +20,6 @@ export const onAdd = (productId) => {
 
 export const handleIncrement = (productId) => {
   const exist = cartItems.value.find((x) => x.id === productId);
-  // if(){
-
-  // }
   cartItems.value = cartItems.value.map((x) =>
     (x.id === productId ? { ...exist, quantity: exist.quantity + 1 } : x)
   )
@@ -36,13 +33,9 @@ export const handleDecrement = (productId) => {
       cartItems.value = cartItems.value.filter((x) => x.id !== productId)
       return
     }
-
-
     cartItems.value = cartItems.value.map((x) =>
       x.id === productId ? { ...exist, quantity: exist.quantity - 1 } : x
     )
-
-
   }
   console.log(cartItems.value);
 }
@@ -56,3 +49,15 @@ export const calculateTotalPrice = computed(() => {
     return checkItem.price * checkItem.quantity
   }).reduce((previous, next) => previous + next) : 0
 });
+
+export const getAllBookTitles = computed(() => {
+  return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {
+    return checkItem.bookTitle;
+  }).join(', ') : '';
+});
+
+// export const getAllBookTitles = computed(() => {
+//   return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {
+//     return checkItem.bookTitle;
+//   }).join(', ') : '';
+// });

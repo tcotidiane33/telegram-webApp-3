@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Cinetpay } from "./cinetpay"; // Assurez-vous que le chemin est correct
+import { Cinetpay } from "./cinetpay";
 import Nav from "../Nav/Nav";
-import { calculateTotalPrice } from "../../db/productSignals";
+// import OrderItem from "../Order/OrderItem";
+import { calculateTotalPrice, getAllBookTitles } from "../../db/productSignals";
 
 import "./test/paymentForm.css";
-
 
 const Payment = () => {
     const [amount, setAmount] = useState(calculateTotalPrice.value);
     const [currency, setCurrency] = useState("XOF");
     const [channels, setChannels] = useState("ALL");
-    const [description, setDescription] = useState("Livre - Test de paiement");
+    const [description, setDescription] = useState("");
     const [customer_name, setCustomerName] = useState("");
     const [customer_carts, setCustomerCarts] = useState("");
     const [customer_email, setCustomerEmail] = useState("");
@@ -18,9 +18,11 @@ const Payment = () => {
     const [customer_address, setCustomerAddress] = useState("");
     const [customer_city, setCustomerCity] = useState("");
 
+    console.log(getAllBookTitles.value);
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         // Générez un ID de transaction unique
         const s4 = () => {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -35,14 +37,13 @@ const Payment = () => {
             amount,
             currency,
             channels,
-            description,
+            description: getAllBookTitles,
             customer_name,
             customer_carts,
             customer_email,
             customer_phone_number,
             customer_address,
             customer_city,
-
         };
 
         try {
@@ -51,14 +52,17 @@ const Payment = () => {
                 apikey: '447088687629111c58c3573.70152188',
                 site_id: 911501,
                 notify_url: 'https://libraryci.netlify.app/notify',
-                return_url: 'https://libraryci.netlify.app/',
+                return_url: 'https://libraryci.netlify.app',
                 lang: 'fr',
+                mode: 'PRODUCTION'
             });
 
             // Utilisez la méthode makePayment de Cinetpay pour effectuer le paiement
             const response = await cp.makePayment(paymentConfig).then((response) => console.log(response))
                 .catch((err) => console.log(err));
-            
+            console.log(response);
+
+
         } catch (error) {
             // Gérez les erreurs de paiement ici
             console.error("Erreur de paiement :", error.message);

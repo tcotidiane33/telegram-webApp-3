@@ -17,7 +17,7 @@ export class Cinetpay {
 
     makePayment = async (paymentConfig) => {
         try {
-            axios({
+            const response = await axios({
                 url: baseUrl + 'payment',
                 method: 'POST',
                 headers: {
@@ -25,30 +25,27 @@ export class Cinetpay {
                 },
                 data: qs.stringify({ ...paymentConfig, ...this.config }),
                 timeout: 10000,
-            })
-                .then((response) => {
-                    if (response.status === 200 && response.data.code === '201' && response.data.data) {
-                        localStorage.setItem('payment', JSON.stringify(response.data));
-                        window.location.href = response.data.data.payment_url;
-                        this.sendNotification('Paiement réussi : Opération réussie !');
-                    } else {
-                        return response.data;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } catch (err) {
-            throw err;
+            });
+
+            if (response.status === 200 && response.data.code === '201' && response.data.data) {
+                localStorage.setItem('payment', JSON.stringify(response.data));
+                window.location.href = response.data.data.payment_url;
+            } else {
+                return response.data;
+            }
+        } catch (error) {
+            console.log(error);
+            throw error;
         }
     };
+    
 
     checkPayStatus = async (transaction_id) => {
         if (!transaction_id) {
             throw new TypeError('transaction_id or payment_token is required');
         }
         try {
-            axios({
+            const response = await axios({
                 url: baseUrl + 'payment/check',
                 method: 'POST',
                 headers: {
@@ -56,28 +53,22 @@ export class Cinetpay {
                 },
                 data: qs.stringify({ transaction_id, ...this.config, token: transaction_id }),
                 timeout: 10000,
-            })
-                .then((response) => {
-                    if (response.status === 200 && response.data.code === '00' && response.data.data) {
-                        localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
-                        this.sendNotification('Vérification du paiement réussie : Opération réussie !');
-                        return response.data;
-                    } else {
-                        return response.data;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        } catch (err) {
-            throw err;
+            });
+
+            if (response.status === 200 && response.data.code === '00' && response.data.data) {
+                localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
+                return response.data;
+            } else {
+                return response.data;
+            }
+        } catch (error) {
+            console.log(error);
+            throw error;
         }
     };
+
     sendNotify(message){
         alert(message);
-        console.log('Notification :', message);
-        
+        console.log('Notification:', message);
     }
 }
-
-//module.exports = Cinetpay;

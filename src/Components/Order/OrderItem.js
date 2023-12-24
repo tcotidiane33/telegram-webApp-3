@@ -8,9 +8,9 @@ function OrderItem({ id, BookTitle, quantity, price, ImageL }) {
     <div className="order-item-container card-wrap">
 
       <li className="order-item card">
-        <img src={ImageL} alt={BookTitle} className="item-image card-bg" />
+        {/* <img src={ImageL} alt={BookTitle} className="item-image card-bg" /> */}
         <div className="item-details card-info">
-          {/* <span className="item-title">{title}</span> */}
+          {/* <span className="item-title">{BookTitle}</span> */}
           {/* <span className="item-quantity">Quantity: {quantity}</span> */}
           <div className="item-buttons">
             <button className="btns btn-remove" onClick={() => handleDecrement(id)}>➖</button>
