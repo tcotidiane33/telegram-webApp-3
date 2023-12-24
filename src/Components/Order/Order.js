@@ -22,10 +22,11 @@ function Order() {
             <OrderItem
               key={id}
               id={id}
-              title={BookTitle}
+              BookTitle={BookTitle}
               quantity={quantity}
               price={price}
-              Image={ImageL}
+              ImageL={ImageL}
+              
             />
           ))}
         </ul>

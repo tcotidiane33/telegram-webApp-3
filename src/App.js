@@ -22,7 +22,9 @@ const App = () => {
             <Order />
           )}
         />
-        <Route path="/category" component={Category} />
+        <Route path="/category"  render={(props) => (
+            <Category />
+          )}  />
         <Route
           path="/paymentForm"
           render={(props) => (

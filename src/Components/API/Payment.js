@@ -11,6 +11,7 @@ const Payment = () => {
     const [currency, setCurrency] = useState("XOF");
     const [channels, setChannels] = useState("ALL");
     const [description, setDescription] = useState("");
+    const [metadata, setMetadata] = useState("");
     const [customer_name, setCustomerName] = useState("");
     const [customer_carts, setCustomerCarts] = useState("");
     const [customer_email, setCustomerEmail] = useState("");
@@ -37,7 +38,8 @@ const Payment = () => {
             amount,
             currency,
             channels,
-            description: getAllBookTitles,
+            description,
+            metadata: getAllBookTitles,
             customer_name,
             customer_carts,
             customer_email,
@@ -103,6 +105,14 @@ const Payment = () => {
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Description:</label>
+                    <input
+                        type="text"
+                        value={metadata}
+                        onChange={(e) => setMetadata(e.target.value)}
                     />
                 </div>
 

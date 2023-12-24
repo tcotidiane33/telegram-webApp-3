@@ -60,12 +60,12 @@
 
 .order-item {
   margin: 10px;
-  padding: 1rem;
-  width: 350px;
+  padding: 2rem;
+  width: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 350px;
+  height: 250px;
   background-color: #6967676e;
   overflow: hidden;
   border-radius: 10px;
@@ -127,6 +127,7 @@
 .card-info h1 {
   font-family: "Playfair Display";
   font-size: 36px;
+  padding: auto;
   font-weight: 700;
   text-shadow: rgba(0, 0, 0, 0.5) 0 10px 10px;
 }
