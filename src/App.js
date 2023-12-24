@@ -22,9 +22,8 @@ const App = () => {
             <Order />
           )}
         />
-        <Route path="/category"  render={(props) => (
-            <Category />
-          )}  />
+        <Route path="/category"  component={Category} />
+       
         <Route
           path="/paymentForm"
           render={(props) => (
@@ -35,11 +34,7 @@ const App = () => {
           render={(props) => (
             <Payment />
           )} />
-        <Route
-          path="/notify"
-          render={(props) => (
-            <Notify />
-          )} />
+        <Route path="/notify"component={Notify}/>
 
 
       </Switch>

@@ -94,6 +94,7 @@ const Notify = () => {
                     </div>
                 ) : null}
                 {error ? <div>Erreur : {JSON.stringify(error)}</div> : null}
+
             </div>
         </>
     );

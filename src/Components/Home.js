@@ -13,9 +13,9 @@ function Home() {
 
   return (
     <>
-      <h1 className="heading">AWS Learn By mistake</h1>
-      <Cart cartItems={cartItems} />
       <Nav />
+      <Cart cartItems={cartItems} />
+      <h1 className="heading">Learn By mistake</h1>
       <div className="cards__container">
         {products.map((product) => (
           <Card
