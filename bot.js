@@ -8,10 +8,10 @@ const bot = new TelegramBot(token, {polling: true});
 
 
 // replace the value below with the Telegram token you receive from @BotFather
-const webAppUrl = 'https://libraryci.netlify.app/';
-const webAppUrlOrder = 'https://libraryci.netlify.app/order';
-const webAppUrlCategory = 'https://libraryci.netlify.app/category';
-const webAppUrlPayment = 'https://libraryci.netlify.app/paymentForm';
+const webAppUrl = 'https://telegram-web-app-3.vercel.app/';
+const webAppUrlOrder = 'https://telegram-web-app-3.vercel.app/order';
+const webAppUrlCategory = 'https://telegram-web-app-3.vercel.app/category';
+const webAppUrlPayment = 'https://telegram-web-app-3.vercel.app/paymentForm';
 
 const commands = {
   start: {

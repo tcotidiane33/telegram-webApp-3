@@ -54,8 +54,8 @@ const Payment = () => {
             const cp = new Cinetpay({
                 apikey: '447088687629111c58c3573.70152188',
                 site_id: 911501,
-                notify_url: 'https://libraryci.netlify.app/notify',
-                return_url: 'https://libraryci.netlify.app',
+                notify_url: 'https://telegram-web-app-3.vercel.app/notify',
+                return_url: 'https://telegram-web-app-3.vercel.app/',
                 lang: 'fr',
                 mode: 'PRODUCTION'
             });
