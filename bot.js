@@ -21,8 +21,8 @@ const commands = {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
-            [{ text: 'Welcome!', url: webAppUrl, thumb_url: 'URL_TO_IMAGE' }],
-            [{ text: 'Category', url: webAppUrlCategory, callback_data: 'option1', thumb_url: 'URL_TO_IMAGE' }],
+            [{ text: 'Welcome!', url: webAppUrl, thumb_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTJo_fmeQyjBw86PTcMb9wUrZT_PmXOHYEtQ&usqp=CAU' }],
+            [{ text: 'Category', url: webAppUrlCategory, callback_data: 'option1', thumb_url: 'https://sharonkapoor45.files.wordpress.com/2014/08/buy-books-online.jpg?w=640' }],
           ]
         }
       });
