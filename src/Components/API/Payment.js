@@ -10,7 +10,7 @@ const Payment = () => {
     const [amount, setAmount] = useState(calculateTotalPrice.value);
     const [currency, setCurrency] = useState("XOF");
     const [channels, setChannels] = useState("ALL");
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState(getAllBookTitles);
     const [metadata, setMetadata] = useState("");
     const [customer_name, setCustomerName] = useState("");
     const [customer_carts, setCustomerCarts] = useState("");
@@ -19,7 +19,8 @@ const Payment = () => {
     const [customer_address, setCustomerAddress] = useState("");
     const [customer_city, setCustomerCity] = useState("");
 
-    console.log(getAllBookTitles.value);
+
+    getAllBookTitles();
 
 
     const handleSubmit = async (e) => {
@@ -39,7 +40,7 @@ const Payment = () => {
             currency,
             channels,
             description,
-            metadata: getAllBookTitles,
+            metadata,
             customer_name,
             customer_carts,
             customer_email,
@@ -101,14 +102,17 @@ const Payment = () => {
                 </div>
                 <div>
                     <label>Description:</label>
-                    <input
+                    <textarea
+                        style={{ width: '100%',height: '100%',padding: '1rem',listStyle: 'none', background: 'yellow', fontWeight:'900' }}
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        readOnly
                     />
+
                 </div>
                 <div>
-                    <label>Description:</label>
+                    <label>Meta Donnée :</label>
                     <input
                         type="text"
                         value={metadata}

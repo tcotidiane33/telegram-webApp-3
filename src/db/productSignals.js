@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals-react";
 import { computed } from "@preact/signals-react";
+import { exit } from "process";
 const { getData } = require("../db/db");
 
 export const cartItems = signal([]);
@@ -15,7 +16,7 @@ export const onAdd = (productId) => {
     const products = getData();
     const product = products.find((x) => x.id === productId);
     cartItems.value = [...cartItems.value, { ...product, quantity: 1 }]
-  }     
+  }
 };
 
 export const handleIncrement = (productId) => {
@@ -50,14 +51,16 @@ export const calculateTotalPrice = computed(() => {
   }).reduce((previous, next) => previous + next) : 0
 });
 
-export const getAllBookTitles = computed(() => {
-  return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {
-    return checkItem.bookTitle;
-  }).join(', ') : '';
-});
+// export const getAllBookTitles = () => {
+//     return cartItems.value.map((item) => {
+//       return Object.values([(item.BookTitle),(item.BookAuthor)]);
+//     });
+// };
 
-// export const getAllBookTitles = computed(() => {
-//   return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {
-//     return checkItem.bookTitle;
-//   }).join(', ') : '';
-// });
+
+export const getAllBookTitles = () => {
+  return cartItems.value.map((item) => {
+    return `•••> ${item.BookTitle} -par- ${item.BookAuthor} `;
+  });
+};
+
