@@ -34,7 +34,7 @@ const Payment = () => {
                 Téléphone du client: ${paymentInfo.customer_phone_number}
                 Adresse du client: ${paymentInfo.customer_address}
                 Ville du client: ${paymentInfo.customer_city}
-                Transaction_Id: ${paymentInfo.transaction_id}
+                Transaction_Id: ⤵️⤵️⤵️⤵️
             `;
 
             const secondMessage = `
