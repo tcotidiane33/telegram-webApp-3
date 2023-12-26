@@ -3,9 +3,7 @@ const { Telegraf } = require('telegraf');
 const token = '6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ';
 // const bot = new Telegraf(token);
 // Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, {polling: true});
-
-
+const bot = new TelegramBot(token, { polling: true });
 
 // replace the value below with the Telegram token you receive from @BotFather
 const webAppUrl = 'https://telegram-web-app-3.vercel.app/';
@@ -29,21 +27,47 @@ const commands = {
     }
   },
   orders: {
-    description: 'Orders command',
+    description: 'Orders  https://telegram-web-app-3.vercel.app/order ',
     handler: async (chatId) => {
       // Handle orders command
     }
   },
   category: {
-    description: 'Category command',
+    description: 'Category  command',
     handler: async (chatId) => {
       // Handle category command
+      await bot.sendMessage(chatId, '📚 Category command executed! Go To https://telegram-web-app-3.vercel.app/category');
     }
   },
   pay: {
     description: 'Pay command',
     handler: async (chatId) => {
       // Handle pay command
+      await bot.sendMessage(chatId, '📚 Category command executed! Go To https://telegram-web-app-3.vercel.app/payment');
+    }
+  },
+  carts: {
+    description: 'Carts command',
+    handler: async (chatId) => {
+      // Handle carts command
+      await bot.sendMessage(chatId, '🛒 Carts command executed!  https://telegram-web-app-3.vercel.app/order');
+    }
+  },
+  help: {
+    description: 'Help command - Show information about available commands',
+    handler: async (chatId) => {
+      const helpMessage = `
+        ℹ️ <b>Available Commands:</b> ℹ️
+
+        /start - Welcome message and links
+        /orders - Handle orders
+        /category - Handle category
+        /pay - Handle pay
+        /carts - Handle carts
+        /help - Show this help message
+      `;
+
+      await bot.sendMessage(chatId, helpMessage, { parse_mode: 'HTML' });
     }
   }
 };

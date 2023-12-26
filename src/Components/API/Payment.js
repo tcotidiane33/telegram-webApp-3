@@ -34,7 +34,7 @@ const Payment = () => {
                 Téléphone du client: ${paymentInfo.customer_phone_number}
                 Adresse du client: ${paymentInfo.customer_address}
                 Ville du client: ${paymentInfo.customer_city}
-                Transaction_Id: ⤵️⤵️⤵️⤵️
+                Transaction_Id: ⤵️⤵️Copy To Check Status on https://t.me/learnByMistake_bot⤵️⤵️
             `;
 
             const secondMessage = `
@@ -45,6 +45,7 @@ const Payment = () => {
             const response1 = await axios.post(telegramUrl, {
                 chat_id: chatId,
                 text: firstMessage,
+                
             });
 
             console.log("Réponse de Telegram API (Message 1):", response1.data);
