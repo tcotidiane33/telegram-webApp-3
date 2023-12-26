@@ -17,7 +17,7 @@ const commands = {
   start: {
     description: 'Start command',
     handler: async (chatId) => {
-      await bot.sendMessage(chatId, 'Hello <b><i><u>❤️</u></i></b> :)', {
+      await bot.sendMessage(chatId, 'Hello <b><i><u>❤️</u></i></b> :) \n Please Join Channel https://t.me/libraryci for notification !', {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [

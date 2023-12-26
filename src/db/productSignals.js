@@ -3,6 +3,7 @@ import { computed } from "@preact/signals-react";
 import { exit } from "process";
 const { getData } = require("../db/db");
 
+
 export const cartItems = signal([]);
 
 export const onAdd = (productId) => {
@@ -50,8 +51,13 @@ export const calculateTotalPrice = computed(() => {
     return checkItem.price * checkItem.quantity
   }).reduce((previous, next) => previous + next) : 0
 });
+export const getQuantity = computed(() => {
+  return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {
+    return `(x${checkItem.quantity})_${checkItem.BookTitle}      `
+  }).reduce((previous, next) => previous + next) : `0 Commande `
+});
 
-// export const getAllBookTitles = () => {
+// export const getQuantity = () => {
 //     return cartItems.value.map((item) => {
 //       return Object.values([(item.BookTitle),(item.BookAuthor)]);
 //     });
@@ -60,7 +66,8 @@ export const calculateTotalPrice = computed(() => {
 
 export const getAllBookTitles = () => {
   return cartItems.value.map((item) => {
-    return `•••> ${item.BookTitle} -par- ${item.BookAuthor} `;
+    return `• • • > ${item.BookTitle} -par- ${item.BookAuthor}          `;
   });
 };
+
 

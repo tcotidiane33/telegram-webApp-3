@@ -41,7 +41,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "node": "nodemon bot.js"
+    "node": "nodemon bot.js",
+    "telegram": "nodemon _bot.js"
+
   },
   "eslintConfig": {
     "extends": [

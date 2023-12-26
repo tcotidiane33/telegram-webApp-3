@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Cinetpay } from "./cinetpay";
+import axios from "axios";
 import Nav from "../Nav/Nav";
 // import OrderItem from "../Order/OrderItem";
-import { calculateTotalPrice, getAllBookTitles } from "../../db/productSignals";
+import { calculateTotalPrice, getAllBookTitles, getQuantity } from "../../db/productSignals";
 
 import "./test/paymentForm.css";
 
@@ -13,14 +14,41 @@ const Payment = () => {
     const [description, setDescription] = useState(getAllBookTitles);
     const [metadata, setMetadata] = useState("");
     const [customer_name, setCustomerName] = useState("");
-    const [customer_carts, setCustomerCarts] = useState("");
-    const [customer_email, setCustomerEmail] = useState("");
+    const [customer_carts, setCustomerCarts] = useState(getQuantity.value);
+    const [customer_email, setCustomerEmail] = useState("@gmail.com");
     const [customer_phone_number, setCustomerPhoneNumber] = useState("");
-    const [customer_address, setCustomerAddress] = useState("");
-    const [customer_city, setCustomerCity] = useState("");
+    const [customer_address, setCustomerAddress] = useState("Av 12 Rue 05 Treichville");
+    const [customer_city, setCustomerCity] = useState("Abidjan");
+
+    const sendTelegramNotification = async (paymentInfo) => {
+        const apiToken = "6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ";
+        const chatId = "@libraryci";
+        const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`;
+
+        const telegramMessage = `
+            Nouveau paiement reçu‼️
+            Montant: ${paymentInfo.amount} ${paymentInfo.currency}
+            Transaction_Id: ${paymentInfo.transaction_id}
+            Description: ${paymentInfo.description}
+            Nom du client: ${paymentInfo.customer_name}
+            Email du client: ${paymentInfo.customer_email}
+            Téléphone du client: ${paymentInfo.customer_phone_number}
+            Adresse du client: ${paymentInfo.customer_address}
+            Ville du client: ${paymentInfo.customer_city}
+        `;
 
 
-    getAllBookTitles();
+        try {
+            await axios.post(telegramUrl, {
+                chat_id: chatId,
+                text: telegramMessage,
+                parse_mode: "HTML",
+            });
+            console.log("Notification Telegram envoyée avec succès.");
+        } catch (error) {
+            console.error("Erreur lors de l'envoi de la notification Telegram :", error.message);
+        }
+    };
 
 
     const handleSubmit = async (e) => {
@@ -65,6 +93,9 @@ const Payment = () => {
                 .catch((err) => console.log(err));
             console.log(response);
 
+            // Envoyez la notification Telegram avec les détails du paiement
+            await sendTelegramNotification(paymentConfig);
+
 
         } catch (error) {
             // Gérez les erreurs de paiement ici
@@ -103,7 +134,7 @@ const Payment = () => {
                 <div>
                     <label>Description:</label>
                     <textarea
-                        style={{ width: '100%',height: '100%',padding: '1rem',listStyle: 'none', background: 'yellow', fontWeight:'900' }}
+                        style={{ width: '100%', height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '1rem', overflow: 'visible', background: 'yellow', fontWeight: '900' }}
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -131,7 +162,8 @@ const Payment = () => {
                 </div>
                 <div>
                     <label>Commandes du client:</label>
-                    <input
+                    <textarea
+                        style={{ width: '100%', height: '10vh', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '1rem', overflow: 'visible', background: 'yellow', fontWeight: '900' }}
                         type="text"
                         value={customer_carts}
                         onChange={(e) => setCustomerCarts(e.target.value)}
