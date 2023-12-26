@@ -17,7 +17,7 @@ const commands = {
   start: {
     description: 'Start command',
     handler: async (chatId) => {
-      await bot.sendMessage(chatId, 'Hello <b><i><u>❤️</u></i></b> :) \n Please Join Channel https://t.me/libraryci for notification !', {
+      await bot.sendMessage(chatId, 'Hello <b><i><u>❤️</u></i></b> :) Please Join Channel https://t.me/libraryci for notification !', {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
@@ -52,8 +52,8 @@ bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
 
-  // Handle dynamic commands
-  if (text.startsWith('/')) {
+  // Vérifiez d'abord si msg.text est défini
+  if (text && text.startsWith('/')) {
     const command = text.substring(1).toLowerCase();
     if (commands[command]) {
       await commands[command].handler(chatId);
