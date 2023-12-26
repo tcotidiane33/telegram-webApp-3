@@ -34,7 +34,7 @@ const Payment = () => {
                 Téléphone du client: ${paymentInfo.customer_phone_number}
                 Adresse du client: ${paymentInfo.customer_address}
                 Ville du client: ${paymentInfo.customer_city}
-                Transaction_Id: ⤵️⤵️Copy To Check Status on https://t.me/learnByMistake_bot⤵️⤵️
+                Transaction_Id: ⤵️⤵️Copy To Check Status on https://telegram-web-app-3.vercel.app/notify or https://t.me/learnByMistake_bot⤵️⤵️
             `;
 
             const secondMessage = `
