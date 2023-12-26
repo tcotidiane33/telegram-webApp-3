@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Cinetpay } from "./cinetpay";
 import axios from "axios";
 import Nav from "../Nav/Nav";
-// import OrderItem from "../Order/OrderItem";
 import { calculateTotalPrice, getAllBookTitles, getQuantity } from "../../db/productSignals";
 
 import "./test/paymentForm.css";
@@ -17,38 +16,54 @@ const Payment = () => {
     const [customer_carts, setCustomerCarts] = useState(getQuantity.value);
     const [customer_email, setCustomerEmail] = useState("@gmail.com");
     const [customer_phone_number, setCustomerPhoneNumber] = useState("");
-    const [customer_address, setCustomerAddress] = useState("Av 12 Rue 05 Treichville");
+    const [customer_address, setCustomerAddress] = useState("Av 12 Rue 05 Treich");
     const [customer_city, setCustomerCity] = useState("Abidjan");
 
     const sendTelegramNotification = async (paymentInfo) => {
-        const apiToken = "6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ";
-        const chatId = "@libraryci";
-        const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`;
-
-        const telegramMessage = `
-            Nouveau paiement reçu‼️
-            Montant: ${paymentInfo.amount} ${paymentInfo.currency}
-            Transaction_Id: ${paymentInfo.transaction_id}
-            Description: ${paymentInfo.description}
-            Nom du client: ${paymentInfo.customer_name}
-            Email du client: ${paymentInfo.customer_email}
-            Téléphone du client: ${paymentInfo.customer_phone_number}
-            Adresse du client: ${paymentInfo.customer_address}
-            Ville du client: ${paymentInfo.customer_city}
-        `;
-
-
         try {
-            await axios.post(telegramUrl, {
+            const apiToken = "6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ";
+            const chatId = "@library_ci";
+            const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`;
+
+            const firstMessage = `
+                Nouveau paiement reçu‼️
+                Montant: ${paymentInfo.amount} ${paymentInfo.currency}
+                Description: ${paymentInfo.description}
+                Nom du client: ${paymentInfo.customer_name}
+                Email du client: ${paymentInfo.customer_email}
+                Téléphone du client: ${paymentInfo.customer_phone_number}
+                Adresse du client: ${paymentInfo.customer_address}
+                Ville du client: ${paymentInfo.customer_city}
+                Transaction_Id: ${paymentInfo.transaction_id}
+            `;
+
+            const secondMessage = `
+                ${paymentInfo.transaction_id}
+            `;
+
+            // Envoi du premier message
+            const response1 = await axios.post(telegramUrl, {
                 chat_id: chatId,
-                text: telegramMessage,
-                parse_mode: "HTML",
+                text: firstMessage,
             });
-            console.log("Notification Telegram envoyée avec succès.");
+
+            console.log("Réponse de Telegram API (Message 1):", response1.data);
+            console.log("Notification Telegram (Message 1) envoyée avec succès.");
+
+            // Envoi du deuxième message
+            const response2 = await axios.post(telegramUrl, {
+                chat_id: chatId,
+                text: secondMessage,
+            });
+
+            console.log("Réponse de Telegram API (Message 2):", response2.data);
+            console.log("Notification Telegram (Message 2) envoyée avec succès.");
         } catch (error) {
             console.error("Erreur lors de l'envoi de la notification Telegram :", error.message);
+            console.error("Réponse d'erreur de Telegram API:", error.response.data);
         }
     };
+
 
 
     const handleSubmit = async (e) => {

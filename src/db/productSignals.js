@@ -1,6 +1,7 @@
 import { signal } from "@preact/signals-react";
 import { computed } from "@preact/signals-react";
 import { exit } from "process";
+import { markdownv2 as format } from "telegram-format";
 const { getData } = require("../db/db");
 
 
@@ -53,7 +54,7 @@ export const calculateTotalPrice = computed(() => {
 });
 export const getQuantity = computed(() => {
   return cartItems.value.length > 0 ? cartItems.value.map((checkItem) => {
-    return `(x${checkItem.quantity})_${checkItem.BookTitle}      `
+    return `(x${checkItem.quantity})_${checkItem.BookTitle}\n`
   }).reduce((previous, next) => previous + next) : `0 Commande `
 });
 
@@ -66,8 +67,14 @@ export const getQuantity = computed(() => {
 
 export const getAllBookTitles = () => {
   return cartItems.value.map((item) => {
-    return `• • • > ${item.BookTitle} -par- ${item.BookAuthor}          `;
-  });
+    return format.escape(`• • • > *${item.BookTitle}* par ${item.BookAuthor}\n`);
+  }).join('');
 };
+
+// export const getAllBookTitles = () => {
+//   return cartItems.value.map((item) => {
+//     return `• • • > ${item.BookTitle} -par- ${item.BookAuthor}          `;
+//   });
+// };
 
 
