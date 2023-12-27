@@ -27,13 +27,21 @@ const Payment = () => {
 
             const firstMessage = `
                 Nouveau paiement reçu‼️
-                Montant: ${paymentInfo.amount} ${paymentInfo.currency}
-                Description: ${paymentInfo.description}
-                Nom du client: ${paymentInfo.customer_name}
-                Email du client: ${paymentInfo.customer_email}
-                Téléphone du client: ${paymentInfo.customer_phone_number}
-                Adresse du client: ${paymentInfo.customer_address}
-                Ville du client: ${paymentInfo.customer_city}
+                ________________________________
+                🟢 Montant: ${paymentInfo.amount} ${paymentInfo.currency}
+                -------------------------------
+                🟢 📚 Description: ${paymentInfo.description} 
+                -------------------------------
+                🟢 Nom du client: ${paymentInfo.customer_name}
+                ________________________________
+                🟢 Email du client: ${paymentInfo.customer_email}
+                ________________________________
+                🟢 Téléphone du client: ${paymentInfo.customer_phone_number}
+                ________________________________
+                🟢 Adresse du client: ${paymentInfo.customer_address}
+                ________________________________
+                🟢 Ville du client: ${paymentInfo.customer_city}
+                ________________________________
                 Transaction_Id: ⤵️⤵️Copy To Check Status on https://telegram-web-app-3.vercel.app/notify or https://t.me/learnByMistake_bot⤵️⤵️
             `;
 
