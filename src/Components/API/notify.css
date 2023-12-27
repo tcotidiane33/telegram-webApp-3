@@ -1,0 +1,59 @@
+/* Ajoutez ces styles à votre fichier CSS ou directement dans votre composant React */
+
+.table-container {
+    margin-top: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.download-button {
+    margin-top: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/* Ajoutez ces styles dans votre fichier CSS ou directement dans votre composant React */
+
+.error-container {
+    background-color: #ffecec;
+    /* Couleur de fond pour indiquer une erreur */
+    padding: 10px;
+    border: 1px solid #f5aca6;
+    /* Couleur de bordure pour indiquer une erreur */
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.error-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.error-table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.error-table tr {
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}

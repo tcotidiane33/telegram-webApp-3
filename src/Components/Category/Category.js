@@ -4,13 +4,21 @@ import { getData } from '../../db/db';
 import './Category.css';
 import Modal from 'react-modal';
 
-
 Modal.setAppElement('#root');
 
 export default function Category() {
     const [data, setData] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // États des filtres
+    const [priceFilter, setPriceFilter] = useState('');
+    const [yearFilter, setYearFilter] = useState('');
+    const [titleFilter, setTitleFilter] = useState('');
+    const [publisherFilter, setPublisherFilter] = useState('');
+
+    // État pour gérer l'affichage du menu déroulant
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const openModal = (book) => {
         setSelectedBook(book);
@@ -28,10 +36,79 @@ export default function Category() {
         setData(booksData);
     }, []);
 
+    // Fonction de filtrage des livres
+    const filterBooks = () => {
+        let filteredData = getData();
+
+        if (priceFilter) {
+            filteredData = filteredData.filter((book) => book.price === priceFilter);
+        }
+
+        if (yearFilter) {
+            filteredData = filteredData.filter((book) => book.YearOfPublication === yearFilter);
+        }
+
+        if (titleFilter) {
+            filteredData = filteredData.filter((book) => book.BookTitle.toLowerCase().includes(titleFilter.toLowerCase()));
+        }
+
+        if (publisherFilter) {
+            filteredData = filteredData.filter((book) => book.Publisher.toLowerCase().includes(publisherFilter.toLowerCase()));
+        }
+
+        setData(filteredData);
+    };
+
+    // Réinitialiser les filtres
+    const resetFilters = () => {
+        setPriceFilter('');
+        setYearFilter('');
+        setTitleFilter('');
+        setPublisherFilter('');
+        setData(getData());
+    };
+
     return (
         <div className="category-container">
             <Nav />
             <h1>Base de données</h1>
+
+            {/* Formulaire de filtre */}
+            <div className="filter-form">
+                <div className="dropdown">
+                    <button className="dropdown-toggle" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                        Filter
+                    </button>
+                    {isDropdownOpen && (
+                        <div className="dropdown-menu">
+                            <label>
+                                Par Prix:
+                                <input type="text" value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)} />
+                            </label>
+
+                            <label>
+                                Par Année de Publication:
+                                <input type="text" value={yearFilter} onChange={(e) => setYearFilter(e.target.value)} />
+                            </label>
+
+                            <label>
+                                Par Titre:
+                                <input type="text" value={titleFilter} onChange={(e) => setTitleFilter(e.target.value)} />
+                            </label>
+
+                            <label>
+                                Par Éditeur:
+                                <input type="text" value={publisherFilter} onChange={(e) => setPublisherFilter(e.target.value)} />
+                            </label>
+
+                            <button onClick={filterBooks}>Filtrer</button>
+                            <button onClick={resetFilters}>Réinitialiser</button>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+
             <div className="books-list">
                 {data.map((item) => (
                     <div key={item.ISBN} className="book-item" onClick={() => openModal(item)}>
@@ -45,6 +122,7 @@ export default function Category() {
                     </div>
                 ))}
             </div>
+
             {/* Modal */}
             <Modal
                 isOpen={isModalOpen}

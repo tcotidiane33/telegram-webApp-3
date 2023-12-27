@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Nav from '../Nav/Nav';
 import { Cinetpay } from './cinetpay';
+import './notify.css'
 
 const Notify = () => {
     const [state, setState] = useState({
@@ -15,6 +16,7 @@ const Notify = () => {
     const handleChange = (e) => {
         setState((prevState) => ({ ...prevState, transactionId: e.target.value }));
     };
+
 
     const handleCheckPaymentStatus = async (e) => {
         e.preventDefault();
@@ -32,7 +34,7 @@ const Notify = () => {
 
             const result = await cinetpayInstance.checkPayStatus(transactionId);
 
-            if (result && result.code === '00' && result.data) {
+            if (result && result.code === '201' && result.data) {
                 setState((prevState) => ({ ...prevState, paymentResult: result.data, error: null }));
             } else {
                 setState((prevState) => ({ ...prevState, error: result, paymentResult: null }));
@@ -45,11 +47,16 @@ const Notify = () => {
         }
     };
 
-    const downloadReceipt = () => {
-        // Customize the receipt based on your requirements
-        const receiptContent = JSON.stringify(paymentResult, null, 2);
 
-        // Create a Blob and download the receipt as a text file
+    const DownloadReceipt = () => {
+        // Créez une nouvelle structure JSON avec tous les résultats possibles
+        const receiptContent = JSON.stringify({
+            result: paymentResult,
+            error: error,
+            loading: loading,
+        }, null, 2);
+
+        // Créez un Blob et téléchargez le reçu en tant que fichier texte
         const blob = new Blob([receiptContent], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -60,6 +67,7 @@ const Notify = () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };
+
 
     return (
         <>
@@ -90,10 +98,28 @@ const Notify = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <button onClick={downloadReceipt}>Télécharger le reçu</button>
+                        <button className="download-button" onClick={DownloadReceipt}>Télécharger le reçu</button>
                     </div>
                 ) : null}
-                {error ? <div>Erreur : {JSON.stringify(error)}</div> : null}
+                <br />
+                {error ? (
+                    <div className="error-container">
+                        <h2>Erreur :</h2>
+                        <table className="error-table">
+                            {Object.entries(error).map(([key, value]) => (
+
+                                <tbody>
+                                    <tr key={key} style={{ borderBottom: '1px solid #ddd' }}>
+                                        <td style={{ padding: '8px', textAlign: 'left', fontWeight: 'bold' }}>
+                                            {key}
+                                        </td>
+                                        <td style={{ padding: '8px',display: 'flex', textAlign: 'left' }}>{JSON.stringify(value)}</td>
+                                    </tr>
+                                </tbody>
+                            ))}
+                        </table>
+                    </div>
+                ) : null}
 
             </div>
         </>
