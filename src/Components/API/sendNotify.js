@@ -24,7 +24,7 @@ const sendTelegramNotification = async (paymentInfo) => {
             ________________________________
             🟢 Ville du client: ${paymentInfo.customer_city}
             ________________________________
-            Transaction_Id: ⤵️⤵️Copy To Check Status on https://telegram-web-app-3.vercel.app/notify or https://t.me/learnByMistake_bot⤵️⤵️
+            Transaction_Id: ${paymentInfo.transaction_id} \n ⤵️⤵️Copy To Check Status on https://telegram-web-app-3.vercel.app/notify or https://t.me/learnByMistake_bot⤵️⤵️
         `;
 
         const secondMessage = `
