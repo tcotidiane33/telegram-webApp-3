@@ -113,12 +113,12 @@ const Payment = () => {
             });
 
             // Utilisez la méthode makePayment de Cinetpay pour effectuer le paiement
-            const response = await cp.makePayment(paymentConfig).then((response) => console.log(response))
+            const response = await [cp.makePayment, sendTelegramNotification](paymentConfig).then((response) => console.log(response))
                 .catch((err) => console.log(err));
             console.log(response);
 
             // Envoyez la notification Telegram avec les détails du paiement
-            await sendTelegramNotification(paymentConfig);
+            // await sendTelegramNotification(paymentConfig);
 
 
         } catch (error) {
