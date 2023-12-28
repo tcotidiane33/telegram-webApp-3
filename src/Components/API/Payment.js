@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Cinetpay } from "./cinetpay";
 import axios from "axios";
 import Nav from "../Nav/Nav";
+import sendTelegramNotification  from "./sendNotify";
 import { calculateTotalPrice, getAllBookTitles, getQuantity } from "../../db/productSignals";
-
 import "./test/paymentForm.css";
+
+//const axios = require('axios');
 
 const Payment = () => {
     const [amount, setAmount] = useState(calculateTotalPrice.value);
@@ -18,61 +20,6 @@ const Payment = () => {
     const [customer_phone_number, setCustomerPhoneNumber] = useState("");
     const [customer_address, setCustomerAddress] = useState("Av 12 Rue 05 Treich");
     const [customer_city, setCustomerCity] = useState("Abidjan");
-
-    const sendTelegramNotification = async (paymentInfo) => {
-        try {
-            const apiToken = "6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ";
-            const chatId = "@library_ci";
-            const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`;
-
-            const firstMessage = `
-                Nouveau paiement reçu‼️
-                ________________________________
-                🟢 Montant: ${paymentInfo.amount} ${paymentInfo.currency}
-                -------------------------------
-                🟢 📚 Description: ${paymentInfo.description} 
-                -------------------------------
-                🟢 Nom du client: ${paymentInfo.customer_name}
-                ________________________________
-                🟢 Email du client: ${paymentInfo.customer_email}
-                ________________________________
-                🟢 Téléphone du client: ${paymentInfo.customer_phone_number}
-                ________________________________
-                🟢 Adresse du client: ${paymentInfo.customer_address}
-                ________________________________
-                🟢 Ville du client: ${paymentInfo.customer_city}
-                ________________________________
-                Transaction_Id: ⤵️⤵️Copy To Check Status on https://telegram-web-app-3.vercel.app/notify or https://t.me/learnByMistake_bot⤵️⤵️
-            `;
-
-            const secondMessage = `
-                ${paymentInfo.transaction_id}
-            `;
-
-            // Envoi du premier message
-            const response1 = await axios.post(telegramUrl, {
-                chat_id: chatId,
-                text: firstMessage,
-                
-            });
-
-            console.log("Réponse de Telegram API (Message 1):", response1.data);
-            console.log("Notification Telegram (Message 1) envoyée avec succès.");
-
-            // Envoi du deuxième message
-            const response2 = await axios.post(telegramUrl, {
-                chat_id: chatId,
-                text: secondMessage,
-            });
-
-            console.log("Réponse de Telegram API (Message 2):", response2.data);
-            console.log("Notification Telegram (Message 2) envoyée avec succès.");
-        } catch (error) {
-            console.error("Erreur lors de l'envoi de la notification Telegram :", error.message);
-            console.error("Réponse d'erreur de Telegram API:", error.response.data);
-        }
-    };
-
 
 
     const handleSubmit = async (e) => {
@@ -112,10 +59,24 @@ const Payment = () => {
                 mode: 'PRODUCTION'
             });
 
+            const { makePayment } = cp;
+
+
+            // Utilisez Promise.all pour exécuter les deux fonctions en parallèle
+            Promise.all([makePayment(paymentConfig), sendTelegramNotification(paymentConfig)])
+                .then(([paymentResponse, telegramResponse]) => {
+                    // Faites quelque chose avec les deux réponses ici
+                    console.log('Réponse du paiement:', paymentResponse);
+                    console.log('Réponse de la notification Telegram:', telegramResponse);
+                })
+                .catch((err) => {
+                    // Gérez les erreurs ici
+                    console.error('Erreur lors de l\'exécution en parallèle :', err);
+                });
             // Utilisez la méthode makePayment de Cinetpay pour effectuer le paiement
-            const response = await [cp.makePayment, sendTelegramNotification](paymentConfig).then((response) => console.log(response))
-                .catch((err) => console.log(err));
-            console.log(response);
+            //const response = await cp.makePayment(paymentConfig).then((response) => console.log(response))
+            //    .catch((err) => console.log(err));
+            //console.log(response);
 
             // Envoyez la notification Telegram avec les détails du paiement
             // await sendTelegramNotification(paymentConfig);

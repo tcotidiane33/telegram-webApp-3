@@ -1,6 +1,6 @@
 import { signal } from "@preact/signals-react";
 import { computed } from "@preact/signals-react";
-import { exit } from "process";
+import axios from 'axios';
 import { markdownv2 as format } from "telegram-format";
 const { getData } = require("../db/db");
 
@@ -67,7 +67,7 @@ export const getQuantity = computed(() => {
 
 export const getAllBookTitles = () => {
   return cartItems.value.map((item) => {
-    return format.escape(`• • • > *${item.BookTitle}* par ${item.BookAuthor}\n`);
+    return format.escape(`• ••> *${item.BookTitle}* par ${item.BookAuthor}\n`);
   }).join('');
 };
 
@@ -76,5 +76,4 @@ export const getAllBookTitles = () => {
 //     return `• • • > ${item.BookTitle} -par- ${item.BookAuthor}          `;
 //   });
 // };
-
 
