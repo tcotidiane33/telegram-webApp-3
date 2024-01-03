@@ -104,7 +104,7 @@ const Notify = () => {
                 <br />
                 {error ? (
                     <div className="error-container">
-                        <h2>Erreur :</h2>
+                        <h2>STATUS :</h2>
                         <table className="error-table">
                             {Object.entries(error).map(([key, value]) => (
 
