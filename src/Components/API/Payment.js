@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Cinetpay } from "./cinetpay";
 import axios from "axios";
 import Nav from "../Nav/Nav";
-import sendTelegramNotification  from "./sendNotify";
+import sendTelegramNotification from "./sendNotify";
 import { calculateTotalPrice, getAllBookTitles, getQuantity } from "../../db/productSignals";
 import "./test/paymentForm.css";
 
@@ -13,14 +13,13 @@ const Payment = () => {
     const [currency, setCurrency] = useState("XOF");
     const [channels, setChannels] = useState("ALL");
     const [description, setDescription] = useState(getAllBookTitles);
-    const [metadata, setMetadata] = useState("");
+    // const [metadata, setMetadata] = useState("");
     const [customer_name, setCustomerName] = useState("");
     const [customer_carts, setCustomerCarts] = useState(getQuantity.value);
-    const [customer_email, setCustomerEmail] = useState("@gmail.com");
+    const [customer_email, setCustomerEmail] = useState("");
     const [customer_phone_number, setCustomerPhoneNumber] = useState("");
     const [customer_address, setCustomerAddress] = useState("Av 12 Rue 05 Treich");
     const [customer_city, setCustomerCity] = useState("Abidjan");
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +38,7 @@ const Payment = () => {
             currency,
             channels,
             description,
-            metadata,
+            // metadata,
             customer_name,
             customer_carts,
             customer_email,
@@ -53,38 +52,59 @@ const Payment = () => {
             const cp = new Cinetpay({
                 apikey: '447088687629111c58c3573.70152188',
                 site_id: 911501,
-                notify_url: 'https://telegram-web-app-3.vercel.app/notify',
-                return_url: 'https://telegram-web-app-3.vercel.app',
+                notify_url: 'https://telegram-web-app-3.vercel.app/notify/:transId',
+                return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
                 lang: 'fr',
-                mode: 'PRODUCTION'
+                mode: 'PROD'
             });
 
-            const { makePayment } = cp;
 
 
+
+            // 1. Effectuer le paiement
+            const paymentResponse = await cp.makePayment(paymentConfig);
+            console.log('Réponse du paiement :', paymentResponse);
+            await cp.sendNotify(paymentConfig.transaction_id).then((response) => console.log(response)).catch((err) => console.log(err));
+            await sendTelegramNotification(paymentConfig);
+
+            // Stockez l'ID de transaction dans le stockage local pour la vérification ultérieure
+            localStorage.setItem('transactionId', paymentConfig.transaction_id);
+
+            // const { makePayment } = cp;
             // Utilisez Promise.all pour exécuter les deux fonctions en parallèle
-            Promise.all([makePayment(paymentConfig), sendTelegramNotification(paymentConfig)])
-                .then(([paymentResponse, telegramResponse]) => {
-                    // Faites quelque chose avec les deux réponses ici
-                    console.log('Réponse du paiement:', paymentResponse);
-                    console.log('Réponse de la notification Telegram:', telegramResponse);
-                })
-                .catch((err) => {
-                    // Gérez les erreurs ici
-                    console.error('Erreur lors de l\'exécution en parallèle :', err);
-                });
-            // Utilisez la méthode makePayment de Cinetpay pour effectuer le paiement
-            //const response = await cp.makePayment(paymentConfig).then((response) => console.log(response))
-            //    .catch((err) => console.log(err));
-            //console.log(response);
+            // Promise.all([makePayment(paymentConfig), sendTelegramNotification(paymentConfig)])
+            // Promise.all([makePayment(paymentConfig), sendTelegramNotification(paymentConfig)])
+            //     .then(([paymentResponse, telegramResponse]) => {
+            //         // Faites quelque chose avec les deux réponses ici
+            //         console.log('Réponse du paiement:', paymentResponse);
+            //         console.log('Réponse de la notification Telegram:', telegramResponse);
+            //     })
+            //     .catch((err) => {
+            //         // Gérez les erreurs ici
+            //         console.error('Erreur lors de l\'exécution en parallèle :', err);
+            //     });
 
-            // Envoyez la notification Telegram avec les détails du paiement
+            // Utilisez la méthode makePayment de Cinetpay pour effectuer le paiement
+            // const response = await cp.makePayment(paymentConfig).then((response) => console.log(response))
+            //     .catch((err) => console.log(err));
+            // await cp.checkPayStatus(paymentConfig.transaction_id).then((response) => console.log(response)).catch((err) => console.log(err));
+            // await cp.sendNotify(paymentConfig.transaction_id).then((response) => console.log(response)).catch((err) => console.log(err));
             // await sendTelegramNotification(paymentConfig);
+            // console.log(response);
+
+
+
+
 
 
         } catch (error) {
-            // Gérez les erreurs de paiement ici
-            console.error("Erreur de paiement :", error.message);
+            // Gérer les erreurs ici
+            console.error('Erreur lors du processus de paiement :', error);
+
+            // Vous pouvez également traiter les erreurs spécifiques ici si nécessaire
+            if (error.response) {
+                console.error('Réponse d\'erreur de Cinetpay API :', error.response.data);
+            }
         }
     };
     return (
@@ -127,7 +147,7 @@ const Payment = () => {
                     />
 
                 </div>
-                <div>
+                {/*   <div>
                     <label>Meta Donnée :</label>
                     <input
                         type="text"
@@ -136,7 +156,7 @@ const Payment = () => {
                     />
                 </div>
 
-                {/* Nouvelles informations pour les paiements par carte bancaire */}
+               Nouvelles informations pour les paiements par carte bancaire */}
                 <div>
                     <label>Nom et Prénom du client:</label>
                     <input

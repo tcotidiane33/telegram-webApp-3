@@ -3,6 +3,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable no-undef */
 import axios from 'axios';
+// import crypto from 'crypto';
+// import { response } from 'express';
 
 //const axios = require('axios');
 const { CinetPayConfig, PaymentConfig } = require('./models');
@@ -38,7 +40,7 @@ export class Cinetpay {
             throw error;
         }
     };
-    
+
 
     checkPayStatus = async (transaction_id) => {
         if (!transaction_id) {
@@ -67,8 +69,32 @@ export class Cinetpay {
         }
     };
 
-    sendNotify(message){
-        alert(message);
-        console.log('Notification:', message);
+    sendNotify = async (transaction_id) => {
+
+        try {
+            const response = await axios({
+                url: baseUrl + 'payment/check',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                data: qs.stringify({ transaction_id, ...this.config, token: transaction_id }),
+                timeout: 50000,
+            });
+
+            if (response.status === 200 && response.data.code === '00' && response.data.data) {
+                localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
+                console.log(response.data.data);
+                return response.data;
+            } else {
+                return response.data;
+            }
+           
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+        // alert(response.data);
+        // console.log('Notification:', response.data);
     }
 }

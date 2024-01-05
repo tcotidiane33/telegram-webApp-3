@@ -1,11 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+// index.js
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import * as serviceWorkerRegistration from './utils/serviceWorkerRegistration';
+import reportWebVitals from './utils/reportWebVitals';
+
+ReactDOM.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
+
+// Enregistrez le service worker ici
+serviceWorkerRegistration.register();
+
+// Si vous avez besoin de mesurer des performances dans votre application, vous pouvez utiliser reportWebVitals
+reportWebVitals();

@@ -5,9 +5,7 @@ import Nav from "./Nav/Nav";
 import { cartItems } from "../db/productSignals";
 const { getData } = require("../db/db");
 const products = getData();
-const telegram = window.Telegram.WebApp;
-
-// ... (importations)
+// const telegram = window.Telegram.WebApp;
 
 function Home() {
 

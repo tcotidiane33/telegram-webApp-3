@@ -6,9 +6,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Components/Home";
 import Order from "./Components/Order/Order";
 import Category from "./Components/Category/Category";
-// import PaymentForm from "./Components/API/test/PaymentForm";
+import Check from "./Components/API/Check";
 import Payment from "./Components/API/Payment";
-import Notify from "./Components/API/Notify";
+import Notify from "./Components/API/exemple/Notify";
+import Return from "./Components/API/exemple/Return";
 
 const App = () => {
 
@@ -24,18 +25,20 @@ const App = () => {
         />
         <Route path="/category" exact component={Category} />
 
-        {/* <Route
-          path="/paymentForm"
+        <Route
+          path="/check"
           render={(props) => (
-            <PaymentForm />
-          )} /> */}
+            <Check />
+          )} />
 
         <Route
           path="/payment"
           render={(props) => (
             <Payment />
           )} />
-        <Route path="/notify" exact component={Notify} />
+        <Route path="/check" exact component={Check} />
+        <Route path="/notify/:transId" component={Notify} />
+        <Route path="/return/:transId" component={Return} />
 
 
       </Switch>
