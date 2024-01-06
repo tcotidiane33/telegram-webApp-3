@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Cinetpay } from "./cinetpay";
 import axios from "axios";
@@ -54,6 +55,7 @@ const Payment = () => {
                 site_id: 911501,
                 notify_url: 'https://telegram-web-app-3.vercel.app/notify/:transId',
                 return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
+                cancel_url: 'https://telegram-web-app-3.vercel.app',
                 lang: 'fr',
                 mode: 'PROD'
             });
