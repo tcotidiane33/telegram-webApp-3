@@ -1,16 +1,53 @@
+const { Cinetpay } = require('./src/Components/API/cinetpay');
+const sendTelegramNotification = require('./src/Components/API/sendNotify');
 const TelegramBot = require('node-telegram-bot-api');
-const { Telegraf } = require('telegraf');
 const token = '6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ';
-// const bot = new Telegraf(token);
-// Create a bot that uses 'polling' to fetch new updates
+
 const bot = new TelegramBot(token, { polling: true });
+const cp = new Cinetpay({
+  apikey: '447088687629111c58c3573.70152188',
+  site_id: 911501,
+  notify_url: 'https://telegram-web-app-3.vercel.app/notify/:transId',
+  return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
+  cancel_url: 'https://telegram-web-app-3.vercel.app',
+  lang: 'fr',
+  mode: 'PRODUCTION'
+});
 
-// replace the value below with the Telegram token you receive from @BotFather
+// Définissez les constantes pour les URL
 const webAppUrl = 'https://telegram-web-app-3.vercel.app/';
-const webAppUrlOrder = 'https://telegram-web-app-3.vercel.app/order';
-const webAppUrlCategory = 'https://telegram-web-app-3.vercel.app/category';
-const webAppUrlPayment = 'https://telegram-web-app-3.vercel.app/paymentForm';
+const webAppUrlOrder = `${webAppUrl}order`;
+const webAppUrlCategory = `${webAppUrl}category`;
+const webAppUrlPayment = `${webAppUrl}paymentForm`;
 
+// Définissez l'ID de transaction à surveiller
+const transactionIdToMonitor = 'YOUR_TRANSACTION_ID';
+
+// Fonction pour vérifier l'état du paiement
+const checkPaymentStatus = async (transactionId) => {
+  try {
+    // Effectuez une requête au serveur CinetPay pour vérifier l'état du paiement
+    const response = await cp.checkPayStatus(transactionId);
+
+    // Traitez la réponse du serveur CinetPay
+    if (response && response.code === '00' && response.message === 'SUCCES' && response.data) {
+      // Le paiement est réussi, envoyez la notification
+      sendTelegramNotification(response);
+    } else {
+      // Le paiement n'est pas encore confirmé, vérifiez à nouveau plus tard
+      console.log('Le paiement n\'est pas encore confirmé. Vérifiez à nouveau plus tard.');
+    }
+  } catch (error) {
+    console.error('Erreur lors de la vérification de l\'état du paiement :', error);
+  }
+};
+
+// Vérifiez l'état du paiement toutes les 5 minutes (ajustez selon vos besoins)
+setInterval(() => {
+  checkPaymentStatus(transactionIdToMonitor);
+}, 5 * 60 * 1000); // 5 minutes
+
+// Commandes du bot
 const commands = {
   start: {
     description: 'Start command',
@@ -36,14 +73,14 @@ const commands = {
     description: 'Category  command',
     handler: async (chatId) => {
       // Handle category command
-      await bot.sendMessage(chatId, '📚 Category command executed! Go To https://telegram-web-app-3.vercel.app/category');
+      await bot.sendMessage(chatId, '📚 Category command executed! Go To ' + webAppUrlCategory);
     }
   },
   pay: {
     description: 'Pay command',
     handler: async (chatId) => {
       // Handle pay command
-      await bot.sendMessage(chatId, '📚 Category command executed! Go To https://telegram-web-app-3.vercel.app/payment');
+      await bot.sendMessage(chatId, '📚 Category command executed! Go To ' + webAppUrlPayment);
     }
   },
   carts: {
@@ -72,6 +109,7 @@ const commands = {
   }
 };
 
+// Gérer les messages du bot
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;

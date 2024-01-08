@@ -57,17 +57,16 @@ const Payment = () => {
                 return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
                 cancel_url: 'https://telegram-web-app-3.vercel.app',
                 lang: 'fr',
-                mode: 'PROD'
+                mode: 'PRODUCTION'
             });
-
-
-
-
             // 1. Effectuer le paiement
             const paymentResponse = await cp.makePayment(paymentConfig);
             console.log('Réponse du paiement :', paymentResponse);
-            await cp.sendNotify(paymentConfig.transaction_id).then((response) => console.log(response)).catch((err) => console.log(err));
-            await sendTelegramNotification(paymentConfig);
+            // Après le traitement du paiement avec CinetPay
+            // const makeNotify = await cp.sendNotify(paymentConfig.transaction_id);
+            // sendTelegramNotification(makeNotify);
+
+            // console.log('Réponse du CheckStatus :', makeNotify);
 
             // Stockez l'ID de transaction dans le stockage local pour la vérification ultérieure
             localStorage.setItem('transactionId', paymentConfig.transaction_id);
@@ -93,12 +92,6 @@ const Payment = () => {
             // await cp.sendNotify(paymentConfig.transaction_id).then((response) => console.log(response)).catch((err) => console.log(err));
             // await sendTelegramNotification(paymentConfig);
             // console.log(response);
-
-
-
-
-
-
         } catch (error) {
             // Gérer les erreurs ici
             console.error('Erreur lors du processus de paiement :', error);
