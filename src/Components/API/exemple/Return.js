@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Cinetpay, checkPayStatus } from '../cinetpay';
 import Nav from '../../Nav/Nav';
+import sendTelegramNotification from "../sendNotify";
 import './CheckPaymentStatus.css';
 
 const Return = ({ handleCheckPaymentStatusProp }) => {
@@ -26,12 +27,13 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
     const handleCheckPaymentStatus = async (history) => {
         try {
             setState((prevState) => ({ ...prevState, loading: true }));
-    
             // Effectuer la vérification du statut de paiement
             const result = await checkPayStatus(transactionId);
-    
-            if (result && result.code === '201' && result.data) {
+            if (result.data.code === '00' && result.data.message === 'SUCCES' && result.data.data) {
                 setState((prevState) => ({ ...prevState, paymentResult: result.data, error: null }));
+                // Après le traitement du paiement avec CinetPay
+                const makeNotify = await Cinetpay.sendNotify(transactionId);
+                sendTelegramNotification(makeNotify);
             } else {
                 setState((prevState) => ({ ...prevState, error: result, paymentResult: null }));
             }
