@@ -1,6 +1,6 @@
-
 import React, { useState } from "react";
-import { Cinetpay } from "./cinetpay";
+import { useHistory } from "react-router-dom";
+import { Cinetpay, checkPayStatus } from "./cinetpay";
 import axios from "axios";
 import Nav from "../Nav/Nav";
 import sendTelegramNotification from "./sendNotify";
@@ -21,6 +21,9 @@ const Payment = () => {
     const [customer_phone_number, setCustomerPhoneNumber] = useState("");
     const [customer_address, setCustomerAddress] = useState("Av 12 Rue 05 Treich");
     const [customer_city, setCustomerCity] = useState("Abidjan");
+
+    const history = useHistory();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,8 +56,8 @@ const Payment = () => {
             const cp = new Cinetpay({
                 apikey: '447088687629111c58c3573.70152188',
                 site_id: 911501,
-                notify_url: 'https://telegram-web-app-3.vercel.app/notify/:transId',
-                return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
+                notify_url: `https://telegram-web-app-3.vercel.app/notify/${uniqId}`,
+                return_url: `https://telegram-web-app-3.vercel.app/return/${uniqId}`,
                 cancel_url: 'https://telegram-web-app-3.vercel.app',
                 lang: 'fr',
                 mode: 'PRODUCTION'
@@ -62,6 +65,10 @@ const Payment = () => {
             // 1. Effectuer le paiement
             const paymentResponse = await cp.makePayment(paymentConfig);
             console.log('Réponse du paiement :', paymentResponse);
+            // Naviguer vers la page Return avec la transaction_id en tant que paramètre
+            
+            history.push(`/return/${uniqId}`);
+
             // Après le traitement du paiement avec CinetPay
             // const makeNotify = await cp.sendNotify(paymentConfig.transaction_id);
             // sendTelegramNotification(makeNotify);

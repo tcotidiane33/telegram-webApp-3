@@ -1,0 +1,30 @@
+/* CheckPaymentStatus.css */
+
+.check-payment-status-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.result-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.result-cell {
+    padding: 8px;
+    text-align: left;
+}
+
+.error-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffcccb;
+    color: red;
+    border-radius: 5px;
+}
