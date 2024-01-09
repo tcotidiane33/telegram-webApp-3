@@ -1,6 +1,5 @@
 import { signal } from "@preact/signals-react";
 import { computed } from "@preact/signals-react";
-import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 import { markdownv2 as format } from "telegram-format";
 const { getData } = require("../db/db");
@@ -73,33 +72,9 @@ export const getAllBookTitles = () => {
 };
 
 
-const TransactionContext = createContext();
-
-export const TransactionProvider = ({ children }) => {
-  const [transactionId, setTransactionId] = useState('');
-
-  const setTransactionIdValue = (id) => {
-    setTransactionId(id);
-  };
-
-  return (
-    <TransactionContext.Provider value={{ transactionId, setTransactionId: setTransactionIdValue }}>
-      {children}
-    </TransactionContext.Provider>
-  );
-};
-
-export const useTransaction = () => {
-  const context = useContext(TransactionContext);
-  if (!context) {
-    throw new Error('useTransaction must be used within a TransactionProvider');
-  }
-  return context;
-};
 
 // export const getAllBookTitles = () => {
 //   return cartItems.value.map((item) => {
 //     return `• • • > ${item.BookTitle} -par- ${item.BookAuthor}          `;
 //   });
 // };
-

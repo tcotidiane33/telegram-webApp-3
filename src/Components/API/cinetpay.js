@@ -1,13 +1,23 @@
-    const axios = require('axios');
-    const qs = require('querystring-es3');
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-useless-catch */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable no-undef */
+import axios from 'axios';
+// import crypto from 'crypto';
+// import { response } from 'express';
 
-    const baseUrl = 'https://api-checkout.cinetpay.com/v2/';
+//const axios = require('axios');
+const { CinetPayConfig, PaymentConfig } = require('./models');
+const qs = require('querystring-es3');
 
-    function Cinetpay(config) {
-        this.config = config;
+const baseUrl = 'https://api-checkout.cinetpay.com/v2/';
+
+export class Cinetpay {
+    constructor(config) {
+        this.config = new CinetPayConfig(config);
     }
 
-    Cinetpay.prototype.makePayment = async function (paymentConfig) {
+    makePayment = async (paymentConfig) => {
         try {
             const response = await axios({
                 url: baseUrl + 'payment',
@@ -31,7 +41,8 @@
         }
     };
 
-    Cinetpay.prototype.checkPayStatus = async function (transaction_id) {
+
+    checkPayStatus = async (transaction_id) => {
         if (!transaction_id) {
             throw new TypeError('transaction_id or payment_token is required');
         }
@@ -46,7 +57,7 @@
                 timeout: 10000,
             });
 
-            if (response.status === 200 && response.data.code === '00' && response.data.data) {
+            if (response.status === 200 && response.data.code === '00'  && response.data.data) {
                 localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
                 return response.data;
             } else {
@@ -58,7 +69,8 @@
         }
     };
 
-    Cinetpay.prototype.sendNotify = async function (transaction_id) {
+    sendNotify = async (transaction_id) => {
+
         try {
             const response = await axios({
                 url: baseUrl + 'payment/check',
@@ -67,10 +79,10 @@
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 data: qs.stringify({ transaction_id, ...this.config, token: transaction_id }),
-                timeout: 3000,
+                timeout: 10000,
             });
 
-            if (response.data.code === '00' && response.data.message === 'SUCCES' && response.data.data) {
+            if (response.data.code === '00' && response.data.data) {
                 localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
                 console.log(response.data.data);
                 alert(response.data.data);
@@ -78,11 +90,12 @@
             } else {
                 return response.data;
             }
-        
+           
         } catch (error) {
             console.log(error);
             throw error;
         }
-    };
-
-    module.exports = { Cinetpay };
+        // alert(response.data);
+        // console.log('Notification:', response.data);
+    }
+}

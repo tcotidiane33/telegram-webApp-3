@@ -1,42 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { Cinetpay, checkPayStatus } from '../cinetpay';
+import { Cinetpay } from '../cinetpay';
 import Nav from '../../Nav/Nav';
 import sendTelegramNotification from "../sendNotify";
 import './CheckPaymentStatus.css';
 
 const Return = ({ handleCheckPaymentStatusProp }) => {
     const [state, setState] = useState({
-        transactionId: '',
         paymentResult: null,
         error: null,
         loading: false,
     });
 
     const { transactionId, paymentResult, error, loading } = state;
-    const { id } = useParams();
+    const { uniqId } = useParams();
     const history = useHistory();
 
     useEffect(() => {
-        // Mettre à jour le state avec la transaction_id provenant de l'URL
-        setState((prevState) => ({ ...prevState, transactionId: id }));
-        // Appeler la fonction de vérification du statut de paiement ici si nécessaire
+        console.log('Transaction ID:', uniqId);
+        setState((prevState) => ({ ...prevState, transactionId: uniqId }));
         handleCheckPaymentStatusProp(history);
-    }, [id, handleCheckPaymentStatusProp, history]);
+    }, [uniqId, handleCheckPaymentStatusProp, history]);
 
-    const handleCheckPaymentStatus = async (history) => {
+
+
+    const handleCheckPaymentStatus = async (transactionId) => {
         try {
             setState((prevState) => ({ ...prevState, loading: true }));
-            // Effectuer la vérification du statut de paiement
-            const result = await checkPayStatus(transactionId);
-            if (result.data.code === '00' && result.data.message === 'SUCCES' && result.data.data) {
-                setState((prevState) => ({ ...prevState, paymentResult: result.data, error: null }));
-                // Après le traitement du paiement avec CinetPay
-                const makeNotify = await Cinetpay.sendNotify(transactionId);
-                sendTelegramNotification(makeNotify);
-            } else {
-                setState((prevState) => ({ ...prevState, error: result, paymentResult: null }));
-            }
+            const cp = new Cinetpay({
+                apikey: '447088687629111c58c3573.70152188',
+                site_id: 911501,
+                notify_url: 'https://telegram-web-app-3.vercel.app/notify',
+                return_url: 'https://telegram-web-app-3.vercel.app/return',
+                lang: 'fr',
+                mode: 'PRODUCTION'
+
+            });
+
+            const result = await cp.checkPayStatus(transactionId);
+            console.log("reponse du check", result);
+            // Call the sendNotify method on the instance
+            const makeNotify = await cp.sendNotify(transactionId);
+            sendTelegramNotification(makeNotify);
+
         } catch (error) {
             console.error('Erreur de vérification du statut de paiement :', error);
             setState((prevState) => ({ ...prevState, error, paymentResult: null }));
@@ -44,7 +50,6 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
             setState((prevState) => ({ ...prevState, loading: false }));
         }
     };
-    
     const renderResultTable = (result) => (
         <table className="result-table">
             <tbody>
@@ -65,7 +70,6 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
                 <h1>Vérification du Statut de Paiement</h1>
                 <div>
                     <p>Transaction ID: {transactionId}</p>
-                    {/* Ajoutez ici un bouton ou un lien pour copier la transaction_id si nécessaire */}
                 </div>
                 <button onClick={() => handleCheckPaymentStatus(history)} disabled={loading}>
                     Vérifier le paiement

@@ -12,26 +12,9 @@ import Notify from "./Components/API/exemple/Notify";
 import Return from "./Components/API/exemple/Return";
 
 const App = () => {
-  const history = useHistory();
-  const handleCheckPaymentStatusProp = async (history) => {
-    // try {
-    //   // Effectuez ici les opérations nécessaires pour vérifier le statut de paiement
-    //   // Par exemple, vous pourriez faire une requête à votre serveur pour effectuer la vérification côté serveur.
-  
-    //   // Simulons une attente pour montrer que cela pourrait être une opération asynchrone
-    //   await new Promise((resolve) => setTimeout(resolve, 2000));
-  
-    //   // Une fois la vérification effectuée avec succès, vous pouvez rediriger l'utilisateur vers une autre page
-    //   // Vous pouvez également mettre à jour l'état local du composant si nécessaire
-  
-    //   // Exemple de redirection
-    //   history.push("/payment-success");
-    // } catch (error) {
-    //   console.error("Erreur lors de la vérification du statut de paiement :", error);
-  
-    //   // Gérez les erreurs ici, vous pouvez également rediriger l'utilisateur vers une page d'erreur si nécessaire
-    //   history.push("/payment-error");
-    // }
+  const handleCheckPaymentStatus = (history) => {
+    // Logique pour gérer le statut de paiement
+    console.log('Vérification du statut de paiement');
   };
     
   return (
@@ -60,10 +43,8 @@ const App = () => {
         <Route path="/check" exact component={Check} />
         <Route path="/notify" component={Notify} />
         <Route
-          path="/return"
-          render={(props) => (
-            <Return {...props} handleCheckPaymentStatusProp={handleCheckPaymentStatusProp} />
-          )}
+          path="/return/:uniqId"
+          render={(props) => <Return {...props} handleCheckPaymentStatusProp={handleCheckPaymentStatus} />}
         />
       </Switch>
     </BrowserRouter>

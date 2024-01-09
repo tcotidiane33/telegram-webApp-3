@@ -1,18 +1,18 @@
-const { Cinetpay } = require('./src/Components/API/cinetpay');
-const sendTelegramNotification = require('./src/Components/API/sendNotify');
+// const { Cinetpay } = require('./src/Components/API/cinetpay');
+// const sendTelegramNotification = require('./src/Components/API/sendNotify');
 const TelegramBot = require('node-telegram-bot-api');
 const token = '6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ';
 
 const bot = new TelegramBot(token, { polling: true });
-const cp = new Cinetpay({
-  apikey: '447088687629111c58c3573.70152188',
-  site_id: 911501,
-  notify_url: 'https://telegram-web-app-3.vercel.app/notify/:transId',
-  return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
-  cancel_url: 'https://telegram-web-app-3.vercel.app',
-  lang: 'fr',
-  mode: 'PRODUCTION'
-});
+// const cp = new Cinetpay({
+//   apikey: '447088687629111c58c3573.70152188',
+//   site_id: 911501,
+//   notify_url: 'https://telegram-web-app-3.vercel.app/notify/:transId',
+//   return_url: 'https://telegram-web-app-3.vercel.app/return/:transId',
+//   cancel_url: 'https://telegram-web-app-3.vercel.app',
+//   lang: 'fr',
+//   mode: 'PRODUCTION'
+// });
 
 // Définissez les constantes pour les URL
 const webAppUrl = 'https://telegram-web-app-3.vercel.app/';
@@ -20,32 +20,32 @@ const webAppUrlOrder = `${webAppUrl}order`;
 const webAppUrlCategory = `${webAppUrl}category`;
 const webAppUrlPayment = `${webAppUrl}paymentForm`;
 
-// Définissez l'ID de transaction à surveiller
-const transactionIdToMonitor = 'YOUR_TRANSACTION_ID';
+// // Définissez l'ID de transaction à surveiller
+// const transactionIdToMonitor = 'YOUR_TRANSACTION_ID';
 
-// Fonction pour vérifier l'état du paiement
-const checkPaymentStatus = async (transactionId) => {
-  try {
-    // Effectuez une requête au serveur CinetPay pour vérifier l'état du paiement
-    const response = await cp.checkPayStatus(transactionId);
+// // Fonction pour vérifier l'état du paiement
+// const checkPaymentStatus = async (transactionId) => {
+//   try {
+//     // Effectuez une requête au serveur CinetPay pour vérifier l'état du paiement
+//     const response = await cp.checkPayStatus(transactionId);
 
-    // Traitez la réponse du serveur CinetPay
-    if (response && response.code === '00' && response.message === 'SUCCES' && response.data) {
-      // Le paiement est réussi, envoyez la notification
-      sendTelegramNotification(response);
-    } else {
-      // Le paiement n'est pas encore confirmé, vérifiez à nouveau plus tard
-      console.log('Le paiement n\'est pas encore confirmé. Vérifiez à nouveau plus tard.');
-    }
-  } catch (error) {
-    console.error('Erreur lors de la vérification de l\'état du paiement :', error);
-  }
-};
+//     // Traitez la réponse du serveur CinetPay
+//     if (response && response.code === '00' && response.message === 'SUCCES' && response.data) {
+//       // Le paiement est réussi, envoyez la notification
+//       sendTelegramNotification(response);
+//     } else {
+//       // Le paiement n'est pas encore confirmé, vérifiez à nouveau plus tard
+//       console.log('Le paiement n\'est pas encore confirmé. Vérifiez à nouveau plus tard.');
+//     }
+//   } catch (error) {
+//     console.error('Erreur lors de la vérification de l\'état du paiement :', error);
+//   }
+// };
 
-// Vérifiez l'état du paiement toutes les 5 minutes (ajustez selon vos besoins)
-setInterval(() => {
-  checkPaymentStatus(transactionIdToMonitor);
-}, 5 * 60 * 1000); // 5 minutes
+// // Vérifiez l'état du paiement toutes les 5 minutes (ajustez selon vos besoins)
+// setInterval(() => {
+//   checkPaymentStatus(transactionIdToMonitor);
+// }, 5 * 60 * 1000); // 5 minutes
 
 // Commandes du bot
 const commands = {
