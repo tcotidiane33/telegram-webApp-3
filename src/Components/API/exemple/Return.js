@@ -4,6 +4,8 @@ import { Cinetpay } from '../cinetpay';
 import Nav from '../../Nav/Nav';
 import sendTelegramNotification from "../sendNotify";
 import './CheckPaymentStatus.css';
+import axios from "axios";
+
 
 const Return = ({ handleCheckPaymentStatusProp }) => {
     const [state, setState] = useState({
@@ -22,8 +24,6 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
         handleCheckPaymentStatusProp(history);
     }, [uniqId, handleCheckPaymentStatusProp, history]);
 
-
-
     const handleCheckPaymentStatus = async (transactionId) => {
         try {
             setState((prevState) => ({ ...prevState, loading: true }));
@@ -34,14 +34,28 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
                 return_url: 'https://telegram-web-app-3.vercel.app/return',
                 lang: 'fr',
                 mode: 'PRODUCTION'
-
             });
 
-            const result = await cp.checkPayStatus(transactionId);
+            const result = await cp.checkPayStatus(uniqId);
             console.log("reponse du check", result);
             // Call the sendNotify method on the instance
-            const makeNotify = await cp.sendNotify(transactionId);
+            const makeNotify = await cp.sendNotify(uniqId);
             sendTelegramNotification(makeNotify);
+
+            setState((prevState) => ({ ...prevState, paymentResult: result.data, error: null }));
+
+
+            // Utilisez Promise.all pour exécuter les deux fonctions en parallèle
+            // Promise.all([cp.sendNotify(transactionId),sendTelegramNotification(makeNotify)])
+            //     .then(([paymentResponse, telegramResponse]) => {
+            //         // Faites quelque chose avec les deux réponses ici
+            //         console.log('Réponse du paiement:', paymentResponse);
+            //         console.log('Réponse de la notification Telegram:', telegramResponse);
+            //     })
+            //     .catch((err) => {
+            //         // Gérez les erreurs ici
+            //         console.error('Erreur lors de l\'exécution en parallèle :', err);
+            //     });
 
         } catch (error) {
             console.error('Erreur de vérification du statut de paiement :', error);
@@ -71,7 +85,7 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
                 <div>
                     <p>Transaction ID: {transactionId}</p>
                 </div>
-                <button onClick={() => handleCheckPaymentStatus(history)} disabled={loading}>
+                <button onClick={() => handleCheckPaymentStatus(transactionId)} disabled={loading}>
                     Vérifier le paiement
                 </button>
 
@@ -80,9 +94,13 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
                 {paymentResult ? (
                     <div>
                         <h2>Résultat du paiement</h2>
+                        <pre>
+                        
                         {renderResultTable(paymentResult)}
+                        </pre>
                     </div>
                 ) : null}
+                
 
                 {error ? (
                     <div className="error-container">
