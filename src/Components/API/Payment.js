@@ -68,7 +68,7 @@ const Payment = () => {
             const paymentResponse = await cp.makePayment(paymentConfig);
             console.log('Réponse du paiement :', paymentResponse);
             // Redirigez vers la page Return avec l'ID généré
-            redirectToReturnPage(uniqId);
+            // redirectToReturnPage(uniqId);
 
             // Après le traitement du paiement avec CinetPay
             // const makeNotify = await cp.sendNotify(paymentConfig.transaction_id);
@@ -216,4 +216,4 @@ const Payment = () => {
     );
 };
 
-export default Payment;
+export default Payment ;

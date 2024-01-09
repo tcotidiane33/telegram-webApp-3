@@ -7,7 +7,6 @@ import Nav from '../../Nav/Nav';
 import sendTelegramNotification from "../sendNotify";
 import './CheckPaymentStatus.css';
 import axios from "axios";
-import { PaymentConfig } from '../models';
 
 
 const Return = ({ handleCheckPaymentStatusProp }) => {
@@ -51,7 +50,7 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
             console.log("reponse du check", result);
             // Call the sendNotify method on the instance
             // const makeNotify = await cp.sendNotify(uniqId);
-            sendTelegramNotification(PaymentConfig);
+            sendTelegramNotification();
 
             setState((prevState) => ({ ...prevState, paymentResult: result.data, error: null }));
             renderResultsOnPage(result.data);
