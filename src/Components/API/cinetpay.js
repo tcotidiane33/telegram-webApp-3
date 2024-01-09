@@ -85,7 +85,7 @@ export class Cinetpay {
             if (response.data.code === '00' && response.data.data) {
                 localStorage.setItem(transaction_id, JSON.stringify(response.data.data));
                 console.log(response.data.data);
-                alert(response.data.data);
+                // alert(response.data.data);
                 return response.data;
             } else {
                 return response.data;

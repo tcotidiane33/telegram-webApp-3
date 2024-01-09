@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Cinetpay } from '../cinetpay';
 import Nav from '../../Nav/Nav';
 import sendTelegramNotification from "../sendNotify";
 import './CheckPaymentStatus.css';
 import axios from "axios";
+import { PaymentConfig } from '../models';
 
 
 const Return = ({ handleCheckPaymentStatusProp }) => {
@@ -13,7 +16,8 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
         error: null,
         loading: false,
     });
-
+    // Ajoutez un nouvel état pour gérer l'affichage de l'icône de chargement
+    const [showLoader, setShowLoader] = useState(true);
     const { transactionId, paymentResult, error, loading } = state;
     const { uniqId } = useParams();
     const history = useHistory();
@@ -22,6 +26,13 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
         console.log('Transaction ID:', uniqId);
         setState((prevState) => ({ ...prevState, transactionId: uniqId }));
         handleCheckPaymentStatusProp(history);
+        // Ajoutez une temporisation pour simuler le chargement (peut être supprimé dans la version finale)
+        const timeout = setTimeout(() => {
+            setShowLoader(false);
+        }, 3000); // 3000 ms (3 secondes) comme exemple, ajustez selon vos besoins
+
+        // Nettoyez le timeout lors du démontage du composant
+        return () => clearTimeout(timeout)
     }, [uniqId, handleCheckPaymentStatusProp, history]);
 
     const handleCheckPaymentStatus = async (transactionId) => {
@@ -39,23 +50,12 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
             const result = await cp.checkPayStatus(uniqId);
             console.log("reponse du check", result);
             // Call the sendNotify method on the instance
-            const makeNotify = await cp.sendNotify(uniqId);
-            sendTelegramNotification(makeNotify);
+            // const makeNotify = await cp.sendNotify(uniqId);
+            sendTelegramNotification(PaymentConfig);
 
             setState((prevState) => ({ ...prevState, paymentResult: result.data, error: null }));
+            renderResultsOnPage(result.data);
 
-
-            // Utilisez Promise.all pour exécuter les deux fonctions en parallèle
-            // Promise.all([cp.sendNotify(transactionId),sendTelegramNotification(makeNotify)])
-            //     .then(([paymentResponse, telegramResponse]) => {
-            //         // Faites quelque chose avec les deux réponses ici
-            //         console.log('Réponse du paiement:', paymentResponse);
-            //         console.log('Réponse de la notification Telegram:', telegramResponse);
-            //     })
-            //     .catch((err) => {
-            //         // Gérez les erreurs ici
-            //         console.error('Erreur lors de l\'exécution en parallèle :', err);
-            //     });
 
         } catch (error) {
             console.error('Erreur de vérification du statut de paiement :', error);
@@ -76,6 +76,11 @@ const Return = ({ handleCheckPaymentStatusProp }) => {
             </tbody>
         </table>
     );
+    const renderResultsOnPage = (result) => {
+        // Logique d'affichage des résultats sur la page
+        console.log("Résultat du paiement sur la page :", result);
+        // Mettez à jour l'interface utilisateur avec les résultats si nécessaire
+    };
 
     return (
         <>

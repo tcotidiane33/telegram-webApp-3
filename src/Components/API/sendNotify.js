@@ -1,72 +1,57 @@
-const axios = require('axios');
-
-const generatePaymentInfoText = (paymentInfo) => {
-    // Générez le contenu du fichier texte en fonction des informations de paiement
-    const content = `
-Montant: ${paymentInfo.data.amount} ${paymentInfo.data.currency}
-Description: ${paymentInfo.data.description}
-Nom du client: ${paymentInfo.data.buyer_name}
-Email du client: ${paymentInfo.data.cpm_email}
-Téléphone du client: ${paymentInfo.data.cpm_customer_mobile}
-Adresse du client: ${paymentInfo.data.cpm_customer_address}
-Ville du client: ${paymentInfo.data.cpm_customer_city}
-Transaction ID: ${paymentInfo.data.cpm_trans_id}
-`;
-
-    return content;
-};
-
-const createTextFile = (content) => {
-    const blob = new Blob([content], { type: "text/plain" });
-    return URL.createObjectURL(blob);
-};
+import axios from "axios";
+//const axios = require('axios');
 
 const sendTelegramNotification = async (paymentInfo) => {
     try {
-        if (
-            paymentInfo &&
-            paymentInfo.code === "00" &&
-            paymentInfo.message === "SUCCES" &&
-            paymentInfo.data &&
-            paymentInfo.data.amount &&
-            paymentInfo.data.currency &&
-            paymentInfo.data.status === "ACCEPTED" &&
-            paymentInfo.data.payment_method &&
-            paymentInfo.data.description &&
-            paymentInfo.data.payment_date
-        ) {
-            // Générez le contenu du fichier texte
-            const textContent = generatePaymentInfoText(paymentInfo);
+        const apiToken = "6465240701:AAEMjbjOjot0IcMYVjDBhbOLs21pl1RPMdQ";
+        const chatId = "@library_ci";
+        const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendMessage`;
 
-            // Créez le fichier texte
-            const textFileUrl = createTextFile(textContent);
+        const firstMessage = `
+            Nouveau paiement reçu‼️
+            ________________________________
+            🟢 Montant: ${paymentInfo.amount} ${paymentInfo.currency}
+            -------------------------------
+            🟢 📚 Description: ${paymentInfo.description} 
+            -------------------------------
+            🟢 Nom du client: ${paymentInfo.customer_name}
+            ________________________________
+            🟢 Email du client: ${paymentInfo.customer_email}
+            ________________________________
+            🟢 Téléphone du client: ${paymentInfo.customer_phone_number}
+            ________________________________
+            🟢 Adresse du client: ${paymentInfo.customer_address}
+            ________________________________
+            🟢 Ville du client: ${paymentInfo.customer_city}
+            ________________________________
+            Transaction_Id: ${paymentInfo.transaction_id} \n ⤵️⤵️Copy To Check Status on https://telegram-web-app-3.vercel.app/notify or https://t.me/learnByMistake_bot⤵️⤵️
+        `;
 
-            // Envoi du document en tant que fichier texte
-            const apiToken = "447088687629111c58c3573.70152188";
-            const chatId = "@library_ci";
-            const telegramUrl = `https://api.telegram.org/bot${apiToken}/sendDocument`;
+        const secondMessage = `
+            ${paymentInfo.transaction_id}
+        `;
 
-            const formData = new FormData();
-            formData.append("chat_id", chatId);
-            formData.append("document", textFileUrl, "payment_info.txt");
-            formData.append("caption", "Informations de paiement");
+        // Envoi du premier message
+        const response1 = await axios.post(telegramUrl, {
+            chat_id: chatId,
+            text: firstMessage,
+        });
 
-            const response = await axios.post(telegramUrl, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
+        console.log("Réponse de Telegram API (Message 1):", response1.data);
+        console.log("Notification Telegram (Message 1) envoyée avec succès.");
 
-            console.log("Réponse de Telegram API :", response.data);
-            console.log("Document Telegram envoyé avec succès.");
+        // Envoi du deuxième message
+        const response2 = await axios.post(telegramUrl, {
+            chat_id: chatId,
+            text: secondMessage,
+        });
 
-            // Libérez l'URL de l'objet blob après l'envoi
-            URL.revokeObjectURL(textFileUrl);
-        } else {
-            console.log("La réponse de CinetPay ne correspond pas au modèle souhaité. Aucun document Telegram n'a été envoyé.");
-        }
+        console.log("Réponse de Telegram API (Message 2):", response2.data);
+        console.log("Notification Telegram (Message 2) envoyée avec succès.");
     } catch (error) {
-        console.error("Erreur lors de l'envoi du document Telegram :", error.message);
-        console.error("Réponse d'erreur de Telegram API :", error.response ? error.response.data : null);
+        console.error("Erreur lors de l'envoi de la notification Telegram :", error.message);
+        console.error("Réponse d'erreur de Telegram API:", error.response.data);
     }
 };
 
-module.exports = sendTelegramNotification;
+export default sendTelegramNotification;

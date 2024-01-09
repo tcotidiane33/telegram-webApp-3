@@ -11,6 +11,9 @@
   ],
   "dependencies": {
     "@azinakou/cinetpay": "^0.0.24",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@preact/signals-react": "^1.3.8",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
